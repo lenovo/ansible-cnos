@@ -1,0 +1,28 @@
+#This file contains VLAG Tier1 leaf configurations tasks
+---
+- name: Replace VLAG Tier1 Leaf CLI template with value for switch1
+  template: src=vlag_1tier_leaf_common.j2 dest=./commands/vlag_1tier_leaf_switch1_{{ inventory_hostname }}_vlag_1tier_leaf_switch1_data_commands.txt
+  with_items: "{{vlag_1tier_leaf_switch1_data}}"
+
+- name: Replace VLAG Tier1 Leaf CLI template with value for switch2
+  template: src=vlag_1tier_leaf_common.j2 dest=./commands/vlag_1tier_leaf_switch2_{{ inventory_hostname }}_vlag_1tier_leaf_switch2_data_commands.txt
+  with_items: "{{vlag_1tier_leaf_switch2_data}}"
+
+- name: Applying CLI template on VLAG Tier1 Leaf Switch1
+  cnos_conditional_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' commandfile=./commands/vlag_1tier_leaf_switch1_{{ inventory_hostname }}_vlag_1tier_leaf_switch1_data_commands.txt outputfile=./results/vlag_1tier_leaf_switch1_{{ inventory_hostname }}_output.txt
+  with_items: "{{vlag_1tier_leaf_switch1_data}}"
+
+- name: Applying CLI template on VLAG Tier1 Leaf Switch2
+  cnos_conditional_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' commandfile=./commands/vlag_1tier_leaf_switch2_{{ inventory_hostname }}_vlag_1tier_leaf_switch2_data_commands.txt outputfile=./results/vlag_1tier_leaf_switch2_{{ inventory_hostname }}_output.txt
+  with_items: "{{vlag_1tier_leaf_switch2_data}}"
+
+- name: Replace VLAG Tier1 Leaf CLI template with value
+  template: src=vlag_1tier_leaf_show.j2 dest=./commands/vlag_1tier_leaf_{{ inventory_hostname }}_show.txt
+  with_items: "{{vlag_1tier_leaf_data}}"
+
+- name: Applying CLI template on  VLAG Tier1 Leaf Switches
+  cnos_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} commandfile=./commands/vlag_1tier_leaf_{{ inventory_hostname }}_show.txt outputfile=./results/vlag_1tier_leaf_show_{{ inventory_hostname }}_output.txt
+  with_items: "{{vlag_1tier_leaf_data}}"
+
+# Completed file
+#

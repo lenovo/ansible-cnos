@@ -1,0 +1,104 @@
+clos_leaf_bgp_common_data:
+  - {   stpmst: configuration,
+        stpmpode: mst
+    }
+
+clos_leaf_bgp_LP21_data:
+  - {   flag: LP21,
+        leaf_to_spine1_interface1: 1/5,
+        leaf_to_spine1_description1: "Link 1 to SP21",
+        leaf_to_spine1_ip1: 20.111.1.2/30,
+        leaf_to_spine1_interface2: 1/6,
+        leaf_to_spine1_description2: "Link 2 to SP21",
+        leaf_to_spine1_ip2: 20.111.2.2/30,
+        leaf_to_spine2_interface1: 1/7,
+        leaf_to_spine2_description1: "Link 1 to SP22",
+        leaf_to_spine2_ip1: 20.211.1.2/30,
+        leaf_to_spine2_interface2: 1/8,
+        leaf_to_spine2_description2: "Link 2 to SP22",
+        leaf_to_spine2_ip2: 20.211.2.2/30,
+        router_as_number: 64711,
+        router_multipath_number: 32,
+        neighbor_as_number: 64802,
+        neighbor_ad_interval: 0,
+        neighbor_address1: 20.111.1.1,
+        neighbor_address2: 20.111.2.1,
+        neighbor_address3: 20.211.1.1,
+        neighbor_address4: 20.211.2.1
+    }
+
+clos_leaf_bgp_LP22_data:
+  - {   flag: LP22,
+        leaf_to_spine1_interface1: 1/5,
+        leaf_to_spine1_description1: "Link 1 to SP22",
+        leaf_to_spine1_ip1: 20.121.1.2/30,
+        leaf_to_spine1_interface2: 1/6,
+        leaf_to_spine1_description2: "Link 2 to SP22",
+        leaf_to_spine1_ip2: 20.121.2.2/30,
+        leaf_to_spine2_interface1: 1/7,
+        leaf_to_spine2_description1: "Link 1 to SP22",
+        leaf_to_spine2_ip1: 20.221.1.2/30,
+        leaf_to_spine2_interface2: 1/8,
+        leaf_to_spine2_description2: "Link 2 to SP22",
+        leaf_to_spine2_ip2: 20.221.2.2/30,
+        router_as_number: 64721,
+        router_multipath_number: 32,
+        neighbor_as_number: 64802,
+        neighbor_ad_interval: 0,
+        neighbor_address1: 20.121.1.1,
+        neighbor_address2: 20.121.2.1,
+        neighbor_address3: 20.221.1.1,
+        neighbor_address4: 20.221.2.1
+    }
+
+clos_leaf_bgp_LP23_data:
+  - {   flag: LP23,
+        leaf_to_spine1_interface1: 1/5,
+        leaf_to_spine1_description1: "Link 1 to SP21",
+        leaf_to_spine1_ip1: 20.131.1.2/30,
+        leaf_to_spine1_interface2: 1/6,
+        leaf_to_spine1_description2: "Link 2 to SP21",
+        leaf_to_spine1_ip2: 20.131.2.2/30,
+        leaf_to_spine2_interface1: 1/7,
+        leaf_to_spine2_description1: "Link 1 to SP22",
+        leaf_to_spine2_ip1: 20.231.1.2/30,
+        leaf_to_spine2_interface2: 1/8,
+        leaf_to_spine2_description2: "Link 2 to SP22",
+        leaf_to_spine2_ip2: 20.231.2.2/30,
+        router_as_number: 64731,
+        router_multipath_number: 32,
+        neighbor_as_number: 64802,
+        neighbor_ad_interval: 0,
+        neighbor_address1: 20.131.1.1,
+        neighbor_address2: 20.131.2.1,
+        neighbor_address3: 20.231.1.1,
+        neighbor_address4: 20.231.2.1
+    }
+
+clos_leaf_bgp_LP24_data:
+  - {   flag: LP24,
+        leaf_to_spine1_interface1: 1/5,
+        leaf_to_spine1_description1: "Link 1 to SP21",
+        leaf_to_spine1_ip1: 20.141.1.2/30,
+        leaf_to_spine1_interface2: 1/6,
+        leaf_to_spine1_description2: "Link 2 to SP21",
+        leaf_to_spine1_ip2: 20.141.2.2/30,
+        leaf_to_spine2_interface1: 1/7,
+        leaf_to_spine2_description1: "Link 1 to SP22",
+        leaf_to_spine2_ip1: 20.241.1.2/30,
+        leaf_to_spine2_interface2: 1/8,
+        leaf_to_spine2_description2: "Link 2 to SP22",
+        leaf_to_spine2_ip2: 20.241.2.2/30,
+        router_as_number: 64741,
+        router_multipath_number: 32,
+        neighbor_as_number: 64802,
+        neighbor_ad_interval: 0,
+        neighbor_address1: 20.141.1.1,
+        neighbor_address2: 20.141.2.1,
+        neighbor_address3: 20.241.1.1,
+        neighbor_address4: 20.241.2.1
+    }
+
+clos_leaf_bgp_show:
+  - {clicommand: "display run"}
+        

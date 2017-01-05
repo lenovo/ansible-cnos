@@ -1,0 +1,8 @@
+# Common code to do some configurations
+ - name: Module to  do show sys info
+   hosts: cnos_facts_sample
+   gather_facts: no
+   connection: local
+
+   roles:
+    - cnos_facts_sample

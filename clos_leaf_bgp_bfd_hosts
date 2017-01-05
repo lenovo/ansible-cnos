@@ -1,0 +1,19 @@
+# You have to paste this dummy information  in /etc/ansible/hosts
+#    Notes:
+#    - Comments begin with the '#' character
+#    - Blank lines are ignored
+#    - Groups of hosts are delimited by [header] elements
+#    - You can enter hostnames or ip addresses
+#    - A hostname/ip can be a member of multiple groups
+#
+# In the /etc/ansible/hosts file u have to enter [vlag_1tier_spine] tag
+# Following you should specify your spine IP Adresses as well as <peerip> IP Address details 
+# as shown below. 
+# Please change <username> and <password> with appropriate value for your switch.
+
+
+[clos_leaf_bgp_bfd]
+10.241.107.39   username=<username> password=<password> deviceType=g8272_cnos condition=LP21
+10.241.107.40   username=<username> password=<password> deviceType=g8272_cnos condition=LP22
+10.240.175.211   username=<username> password=<password> deviceType=g8272_cnos condition=LP23
+10.240.175.212   username=<username> password=<password> deviceType=g8272_cnos condition=LP23

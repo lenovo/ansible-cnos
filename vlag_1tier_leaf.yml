@@ -1,0 +1,10 @@
+# Module to configure Lenovo Leaf switches
+ - name: Module to Configure Tier1 Lenovo Leaf Switches
+   hosts: vlag_1tier_leaf
+   gather_facts: no
+   connection: local
+
+   roles:
+    - vlag_1tier_leaf
+
+#

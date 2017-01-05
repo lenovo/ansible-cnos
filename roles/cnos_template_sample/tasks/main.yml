@@ -1,0 +1,12 @@
+# This contain sample template execution tasks
+---
+- name: Replace Config CLI command template with values
+  template: src=demo_template.j2 dest=./commands/demo_template_{{ inventory_hostname }}_commands.txt
+  with_items: "{{demo_template_data}}"
+
+- name: Applying CLI commands on Switches
+  cnos_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} commandfile=./commands/demo_template_{{ inventory_hostname }}_commands.txt outputfile=./results/demo_template_command_{{ inventory_hostname }}_output.txt
+  with_items: "{{demo_template_data}}"
+
+# Completed file
+

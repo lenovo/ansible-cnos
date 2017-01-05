@@ -1,0 +1,9 @@
+# Common code to do some configurations
+ - name: Module to  do bgp configurations
+   hosts: cnos_bgp_sample
+   gather_facts: no
+   connection: local
+
+   roles:
+    - cnos_bgp_sample
+

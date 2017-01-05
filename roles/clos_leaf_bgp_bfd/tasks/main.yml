@@ -1,0 +1,52 @@
+# This contains tasks to configure CLOS Leaf switches wth BGP and further show it
+---
+- name: Replace common Clos BGP CLI command template with leaf values
+  template: src=clos_leaf_bgp_common.j2 dest=./commands/clos_common_leaf_bgp_{{ inventory_hostname }}_commands.txt
+  with_items: "{{clos_leaf_bgp_common_data}}"
+
+- name: Applying common Clos BGP CLI commands to all leaf switches
+  cnos_template: host={{inventory_hostname}} commandfile=./commands/clos_common_leaf_bgp_{{ inventory_hostname }}_commands.txt username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} outputfile=./results/clos_common_leaf_bgp_command_{{ inventory_hostname }}_output.txt
+
+
+- name: Replace unique Clos BGP CLI command template with unique leaf values for LP21
+  template: src=clos_leaf_bgp_unique.j2 dest=./commands/clos_unique_leaf_bgp_{{ inventory_hostname }}_clos_leaf_bgp_LP21_data_commands.txt
+  with_items: "{{clos_leaf_bgp_LP21_data}}"
+
+- name: Replace unique Clos BGP CLI command template with unique leaf values for LP22
+  template: src=clos_leaf_bgp_unique.j2 dest=./commands/clos_unique_leaf_bgp_{{ inventory_hostname }}_clos_leaf_bgp_LP22_data_commands.txt
+  with_items: "{{clos_leaf_bgp_LP22_data}}"
+
+- name: Replace unique Clos BGP CLI command template with unique leaf values for LP23
+  template: src=clos_leaf_bgp_unique.j2 dest=./commands/clos_unique_leaf_bgp_{{ inventory_hostname }}_clos_leaf_bgp_LP23_data_commands.txt
+  with_items: "{{clos_leaf_bgp_LP23_data}}"
+
+- name: Replace unique Clos BGP CLI command template with unique leaf values for LP24
+  template: src=clos_leaf_bgp_unique.j2 dest=./commands/clos_unique_leaf_bgp_{{ inventory_hostname }}_clos_leaf_bgp_LP24_data_commands.txt
+  with_items: "{{clos_leaf_bgp_LP24_data}}"
+
+- name: Applying unique Clos BGP CLI commands to LP21 switch
+  cnos_conditional_template: host={{inventory_hostname}} commandfile=./commands/clos_unique_leaf_bgp_{{ inventory_hostname }}_clos_leaf_bgp_LP21_data_commands.txt username={{ hostvars[inventory_hostname]['username']}} password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' outputfile=./results/clos_unique_leaf_bgp_command_{{ inventory_hostname }}_clos_leaf_bgp_LP21_data_output.txt
+  with_items: "{{clos_leaf_bgp_LP21_data}}"
+
+- name: Applying unique Clos BGP  CLI commands to LP22 switch
+  cnos_conditional_template: host={{inventory_hostname}} commandfile=./commands/clos_unique_leaf_bgp_{{ inventory_hostname }}_clos_leaf_bgp_LP22_data_commands.txt username={{ hostvars[inventory_hostname]['username']}} password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' outputfile=./results/clos_unique_leaf_bgp_command_{{ inventory_hostname }}_clos_leaf_bgp_LP22_data_output.txt
+  with_items: "{{clos_leaf_bgp_LP22_data}}"
+
+- name: Applying unique Clos BGP CLI commands to LP23 switch
+  cnos_conditional_template: host={{inventory_hostname}} commandfile=./commands/clos_unique_leaf_bgp_{{ inventory_hostname }}_clos_leaf_bgp_LP23_data_commands.txt username={{ hostvars[inventory_hostname]['username']}} password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' outputfile=./results/clos_unique_leaf_bgp_command_{{ inventory_hostname }}_clos_leaf_bgp_LP23_data_output.txt
+  with_items: "{{clos_leaf_bgp_LP23_data}}"
+
+- name: Applying unique Clos BGP  CLI commands to LP24 switch
+  cnos_conditional_template: host={{inventory_hostname}} commandfile=./commands/clos_unique_leaf_bgp_{{ inventory_hostname }}_clos_leaf_bgp_LP24_data_commands.txt username={{ hostvars[inventory_hostname]['username']}} password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' outputfile=./results/clos_unique_leaf_bgp_command_{{ inventory_hostname }}_clos_leaf_bgp_LP24_data_output.txt
+  with_items: "{{clos_leaf_bgp_LP24_data}}"
+
+
+- name: Replace CLOS BGP Leaf Switches CLI show template with values
+  template: src=clos_leaf_bgp_show.j2 dest=./commands/clos_leaf_bgp_{{ inventory_hostname }}_show.txt
+  with_items: "{{clos_leaf_bgp_show}}"
+
+- name: Applying CLI show commands CLOS BGP Leaf Switches
+  cnos_template: host={{ inventory_hostname }} commandfile=./commands/clos_leaf_bgp_{{ inventory_hostname }}_show.txt username={{ hostvars[inventory_hostname]['username']}} password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} outputfile=./results/clos_leaf_bgp_show_{{ inventory_hostname }}_output.txt
+  with_items: "{{clos_leaf_bgp_show}}"
+
+# Completed file

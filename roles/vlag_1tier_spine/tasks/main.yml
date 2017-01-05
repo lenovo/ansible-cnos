@@ -1,0 +1,44 @@
+# This contain tasks to configure VLAG Tier1 Spine switches and further show it
+---
+- name: Replace VLAG Tier1 Spine CLI command template with values
+  template: src=vlag_1tier_spine_common.j2 dest=./commands/vlag_1tier_spine_{{ inventory_hostname }}_commands.txt
+  with_items: "{{vlag_1tier_spine_data}}"
+
+- name: Applying CLI commands on VLAG Tier1 Spine Switches
+  cnos_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} commandfile=./commands/vlag_1tier_spine_{{ inventory_hostname }}_commands.txt outputfile=./results/vlag_1tier_spine_command_{{ inventory_hostname }}_output.txt
+  with_items: "{{vlag_1tier_spine_data}}"
+
+# Pause for 5 seconds before next step.
+#- pause: seconds=5
+
+#- name: Replace VLAG Tier1 Spine fail over CLI command template with values
+#  template: src=vlag_1tier_spine_failover.j2 dest=./commands/vlag_1tier_spine_{{ inventory_hostname }}_failover.txt
+#  with_items: "{{vlag_1tier_spine_data}}"
+
+#- name: Applying CLI commands on VLAG Tier1 Spine Switches
+#  lenovo_runtemplate: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} commandfile=./commands/vlag_1tier_spine_{{ inventory_hostname }}_failover.txt outputfile=./results/vlag_1tier_spine_failover_{{ inventory_hostname }}_output.txt
+#  with_items: "{{vlag_1tier_spine_data}}"
+
+# Pause for 5 seconds before next step.
+#- pause: seconds=5
+
+#- name: Replace VLAG Tier1 Spine fail back CLI command template with values
+#  template: src=vlag_1tier_spine_failback.j2 dest=./commands/vlag_1tier_spine_{{ inventory_hostname }}_failback.txt
+#  with_items: "{{vlag_1tier_spine_data}}"
+
+#- name: Applying CLI commands on VLAG Tier1 Spine Switches
+#  lenovo_runtemplate: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} commandfile=./commands/vlag_1tier_spine_{{ inventory_hostname }}_failback.txt outputfile=./results/vlag_1tier_spine_command_{{ inventory_hostname }}_failback.txt
+#  with_items: "{{vlag_1tier_spine_data}}"
+
+# Pause for 5 seconds before next step.
+#- pause: seconds=5
+
+- name: Replace VLAG Tier1 Spine CLI show template with values
+  template: src=vlag_1tier_spine_show.j2 dest=./commands/vlag_1tier_spine_{{ inventory_hostname }}_show.txt
+  with_items: "{{vlag_1tier_spine_data}}"
+
+- name: Applying CLI show commands on VLAG Tier1 Spine Switches
+  cnos_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} commandfile=./commands/vlag_1tier_spine_{{ inventory_hostname }}_show.txt outputfile=./results/vlag_1tier_show_{{ inventory_hostname }}_output.txt
+  with_items: "{{vlag_1tier_spine_data}}"
+
+# Completed file

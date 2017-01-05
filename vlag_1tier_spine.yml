@@ -1,0 +1,8 @@
+# Common code to configure all spine switches
+ - name: Module to Configure Lenovo Tier1 Spine Switch
+   hosts: vlag_1tier_spine
+   gather_facts: no
+   connection: local
+
+   roles:
+    - vlag_1tier_spine

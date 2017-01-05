@@ -1,0 +1,10 @@
+# Module to configure Lenovo CLOS Leaf BGP switches
+- name: Module to Configure Lenovo CLOS Leaf BGP Switches
+  hosts: clos_leaf_bgp_bfd 
+  gather_facts: no
+  connection: local
+
+  roles:
+   - clos_leaf_bgp_bfd 
+
+#

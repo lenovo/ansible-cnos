@@ -1,0 +1,8 @@
+# Common code to do some configurations
+ - name: Module to  do Interface Ethernet configurations
+   hosts: cnos_ethernet_sample
+   gather_facts: no
+   connection: local
+
+   roles:
+    - cnos_ethernet_sample

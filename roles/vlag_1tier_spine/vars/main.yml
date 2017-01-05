@@ -1,0 +1,14 @@
+---
+ vlag_1tier_spine_data:
+ - {slot_chassis_number1: "1/1-2",
+portchannel_interface_number1: 100,
+portchannel_mode1: "active",
+slot_chassis_number2: "1/3",
+portchannel_interface_number2: 1003,
+slot_chassis_number3: "1/4",
+portchannel_interface_number3: 1004,
+switchport_mode1: trunk,
+stp_mode1: disable,
+vlag_tier_id1: 66,
+vlag_instance_number1: 1,
+vlag_instance_number2: 2}
