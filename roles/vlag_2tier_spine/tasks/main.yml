@@ -1,27 +1,27 @@
 # This contain tasks to configure VLAG Tier 2 Spine switches and further show it
 ---
 - name: Replace VLAG Tier2 Spine North bound CLI command template with values
-  template: src=vlag_2tier_spine_common.j2 dest=./commands/vlag_2tier_spine_north_{{ inventory_hostname }}_vlag_2tier_spine_north_data_commands.txt
+  template: src=vlag_2tier_spine_common.j2 dest=./commands/vlag_2tier_spine_{{ inventory_hostname }}_north_commands.txt
+  with_items: "{{vlag_2tier_spine_north_data}}"
+
+- name: Applying CLI commands VLAG Tier2 North Spine Switches
+  cnos_conditional_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' commandfile=./commands/vlag_2tier_spine_{{ inventory_hostname }}_north_commands.txt outputfile=./results/vlag_2tier_spine_{{ inventory_hostname }}_north_output.txt
   with_items: "{{vlag_2tier_spine_north_data}}"
 
 - name: Replace VLAG Tier2 Spine South bound CLI command template with values
-  template: src=vlag_2tier_spine_common.j2 dest=./commands/vlag_2tier_spine_south_{{ inventory_hostname }}_vlag_2tier_spine_south_data_commands.txt
+  template: src=vlag_2tier_spine_common.j2 dest=./commands/vlag_2tier_spine_{{ inventory_hostname }}_south_commands.txt
   with_items: "{{vlag_2tier_spine_south_data}}"
 
-- name: Applying CLI commands VLAG Tier2 North Spine Switches
-  cnos_conditional_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' commandfile=./commands/vlag_2tier_spine_north_{{ inventory_hostname }}_vlag_2tier_spine_north_data_commands.txt outputfile=./results/vlag_2tier_spine_north_{{ inventory_hostname }}_output.txt
-  with_items: "{{vlag_2tier_spine_north_data}}"
-
 - name: Applying CLI commands VLAG Tier2 South Spine Switches
-  cnos_conditional_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' commandfile=./commands/vlag_2tier_spine_south_{{ inventory_hostname }}_vlag_2tier_spine_south_data_commands.txt outputfile=./results/vlag_2tier_spine_south_{{ inventory_hostname }}_output.txt
+  cnos_conditional_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' commandfile=./commands/vlag_2tier_spine_{{ inventory_hostname }}_south_commands.txt outputfile=./results/vlag_2tier_spine_{{ inventory_hostname }}_south_output.txt
   with_items: "{{vlag_2tier_spine_south_data}}"
 
 - name: Replace VLAG Tier 2 Switches CLI show template with values
-  template: src=vlag_2tier_spine_show.j2 dest=./commands/vlag_2tier_spine_{{ inventory_hostname }}_show.txt
+  template: src=vlag_2tier_spine_show.j2 dest=./commands/vlag_2tier_spine_{{ inventory_hostname }}_show_commands.txt
   with_items: "{{vlag_2tier_spine_data}}"
 
 - name: Applying CLI show commands VLAG Tier2 Switches
-  cnos_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} commandfile=./commands/vlag_2tier_spine_{{ inventory_hostname }}_show.txt outputfile=./results/vlag_2tier_spine_show_{{ inventory_hostname }}_output.txt
+  cnos_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} commandfile=./commands/vlag_2tier_spine_{{ inventory_hostname }}_show_commands.txt outputfile=./results/vlag_2tier_spine_{{ inventory_hostname }}_show_output.txt
   with_items: "{{vlag_2tier_spine_data}}"
 
 # Completed file

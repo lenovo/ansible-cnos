@@ -196,9 +196,11 @@ def  main():
         for line in f:
 	        #Omit the comment lines in template file
             if not line.startswith("#"):
-                output = output + cnos_utility.waitForDeviceResponse(line,"#", 2, remote_conn)
-	
-    #Write to memory
+                command = line
+                if not line.endswith("\n"):
+                    command = command+"\n"
+                output = output + cnos_utility.waitForDeviceResponse(command,"#", 2, remote_conn)
+	#Write to memory
     #Write to memory
     output = output + cnos_utility.waitForDeviceResponse("save\n","#", 3, remote_conn)
 	#Write output to file

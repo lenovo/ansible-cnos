@@ -174,7 +174,7 @@ def  main():
     output = output + cnos_utility.waitForDeviceResponse(cliCommand +"\n","#", 2, remote_conn)
         
     #Save it into the file
-    file = open(outputfile, "w")
+    file = open(outputfile, "a")
     file.write(output)
     file.close()
         

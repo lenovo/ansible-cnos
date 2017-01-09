@@ -1,4 +1,4 @@
-## This contain sample template execution tasks
+## This contain sample BGP execution tasks
 ---
 - name: Test BGP  - neighbor
   cnos_bgp:  host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} outputfile=./results/cnos_bgp_{{ inventory_hostname }}_output.txt asNum='{{item.asNum}}' bgpArg1='{{item.bgpArg1}}' bgpArg2='{{item.bgpArg2}}' bgpArg3='{{item.bgpArg3}}' bgpArg4='{{item.bgpArg4}}' bgpArg5='{{item.bgpArg5}}' bgpArg6='{{item.bgpArg6}}'

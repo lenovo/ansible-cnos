@@ -1,17 +1,17 @@
 ---
-test_vlan_data1:
+cnos_vlan_data1:
   - {vlanArg1: 13, vlanArg2: "name", vlanArg3: "anil"}
-test_vlan_data2:
+cnos_vlan_data2:
   - {vlanArg1: 13, vlanArg2: "flood", vlanArg3: "ipv4"}
-test_vlan_data3:
+cnos_vlan_data3:
   - {vlanArg1: 13, vlanArg2: "state", vlanArg3: "active"}
-test_vlan_data4:
+cnos_vlan_data4:
   - {vlanArg1: "access-map", vlanArg2: "anil", vlanArg3: "statistics"}
-test_vlan_data5:
+cnos_vlan_data5:
   - {vlanArg1: "access-map", vlanArg2: "anil", vlanArg3: "action", vlanArg4: "forward"}
-test_vlan_data6:
+cnos_vlan_data6:
   - {vlanArg1: 13, vlanArg2: "ip", vlanArg3: "query-interval", vlanArg4: 1313}
-test_vlan_data7:
+cnos_vlan_data7:
   - {vlanArg1: 13, vlanArg2: "ip", vlanArg3: "last-member-query-interval", vlanArg4: 23}
-test_vlan_data8:
+cnos_vlan_data8:
   - {vlanArg1: 13, vlanArg2: "ip", vlanArg3: "mrouter", vlanArg4: "port-aggregation", vlanArg5: 23}

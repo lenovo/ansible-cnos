@@ -1,27 +1,27 @@
 # This contain tasks to configure VLAG Tier2 Leaf switches and further show it
 ---
 - name: Replace VLAG Tier2 Leaf CLI command template with values for switch1
-  template: src=vlag_2tier_leaf_common.j2 dest=./commands/vlag_2tier_leaf_switch1_{{ inventory_hostname }}_vlag_2tier_leaf_switch1_data_commands.txt
+  template: src=vlag_2tier_leaf_common.j2 dest=./commands/vlag_2tier_leaf_switch1_{{ inventory_hostname }}_commands.txt
+  with_items: "{{vlag_2tier_leaf_switch1_data}}"
+
+- name: Applying CLI commands VLAG Tier2 Leaf Switch1
+  cnos_conditional_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' commandfile=./commands/vlag_2tier_leaf_switch1_{{ inventory_hostname }}_commands.txt outputfile=./results/vlag_2tier_leaf_switch1_{{ inventory_hostname }}_output.txt
   with_items: "{{vlag_2tier_leaf_switch1_data}}"
 
 - name: Replace VLAG Tier2 Leaf CLI command template with values for switch2
-  template: src=vlag_2tier_leaf_common.j2 dest=./commands/vlag_2tier_leaf_switch2_{{ inventory_hostname }}_vlag_2tier_leaf_switch2_data_commands.txt
+  template: src=vlag_2tier_leaf_common.j2 dest=./commands/vlag_2tier_leaf_switch2_{{ inventory_hostname }}_commands.txt
   with_items: "{{vlag_2tier_leaf_switch2_data}}"
 
-- name: Applying CLI commands VLAG Tier2 Leaf Switch1
-  cnos_conditional_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' commandfile=./commands/vlag_2tier_leaf_switch1_{{ inventory_hostname }}_vlag_2tier_leaf_switch1_data_commands.txt outputfile=./results/vlag_2tier_leaf_switch1_{{ inventory_hostname }}_output.txt
-  with_items: "{{vlag_2tier_leaf_switch1_data}}"
-
 - name: Applying CLI commands VLAG Tier2 Leaf Switch2
-  cnos_conditional_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' commandfile=./commands/vlag_2tier_leaf_switch2_{{ inventory_hostname }}_vlag_2tier_leaf_switch2_data_commands.txt outputfile=./results/vlag_2tier_leaf_switch2_{{ inventory_hostname }}_output.txt
+  cnos_conditional_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} condition={{ hostvars[inventory_hostname]['condition']}} flag='{{item.flag}}' commandfile=./commands/vlag_2tier_leaf_switch2_{{ inventory_hostname }}_commands.txt outputfile=./results/vlag_2tier_leaf_switch2_{{ inventory_hostname }}_output.txt
   with_items: "{{vlag_2tier_leaf_switch2_data}}"
 
 - name: Replace VLAG Tier2 Leaf Switches CLI show template with values
-  template: src=vlag_2tier_leaf_show.j2 dest=./commands/vlag_2tier_leaf_{{ inventory_hostname }}_show.txt
+  template: src=vlag_2tier_leaf_show.j2 dest=./commands/vlag_2tier_leaf_{{ inventory_hostname }}_show_commands.txt
   with_items: "{{vlag_2tier_leaf_data}}"
 
 - name: Applying CLI show commands VLAG Tier2 Leaf Switches
-  cnos_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} commandfile=./commands/vlag_2tier_leaf_{{ inventory_hostname }}_show.txt outputfile=./results/vlag_2tier_leaf_show_{{ inventory_hostname }}_output.txt
+  cnos_template: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} commandfile=./commands/vlag_2tier_leaf_{{ inventory_hostname }}_show_commands.txt outputfile=./results/vlag_2tier_leaf_{{ inventory_hostname }}_show_output.txt
   with_items: "{{vlag_2tier_leaf_data}}"
 
 # Completed file
