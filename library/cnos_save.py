@@ -179,7 +179,7 @@ def  main():
     #Make terminal length = 0
     output = output + cnos_utility.waitForDeviceResponse("terminal length 0\n","#", 2, remote_conn)
     
-    cnos_utility.debugOutput(cliCommand)
+    #cnos_utility.debugOutput(cliCommand)
     #Send the CLi command
     output = output + cnos_utility.waitForDeviceResponse(cliCommand,"#", 2, remote_conn)
    

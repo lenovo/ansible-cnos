@@ -18,18 +18,16 @@ version_added: "1.7"
 module: cnos_backup
 short_description: Performs configuration Back up of switches using SFTP/SCP/FTP/TFTP.
 description: 
-    - Manages network device configurations over SSH.
-    This module allows implementors to work with the device configurations.
-    It provides a way to backup configurations of a network device to an SFTP/SCP/FTP/TFTP server.
-    You can store either the running config or start up config of the device
-    You have to first create a folder which has the reach of the SFTP/SCP/FTP/TFTP Server.
-    Then specify the full path from where you need to backup the config file.
-    Authentication details pertaining to SFTP/SCP/FTP server also have to be provided.
-    Results of the backup operation can be viewed in results folder..
-
+    - Manages network device configurations over SSH. 
+     This module allows implementors to work with the device configurations. 
+     It provides a way to backup configurations of a network device to an SFTP/SCP/FTP/TFTP server.
+     You can store either the running config or start up config of the device. 
+     You have to first create a folder which has the reach of the SFTP/SCP/FTP/TFTP Server. 
+     Then specify the full path from where you need to backup the config file. 
+     Authentication details pertaining to SFTP/SCP/FTP server also have to be provided. 
+     Results of the backup operation can be viewed in results folder.
 options:
 # Options are as given below
-    
     outputfile:
         description:
             - This specifies the file path to which the output of each command execution is persisted. 
@@ -41,40 +39,40 @@ options:
     host:
         description:
             - This is the variable which used to look into /etc/ansible/hosts file so that device IP addresses 
-            - on which this template has to be applied is identified. Usually we specify the ansible keyword 
-            - {{ inventory_hostname }} which we specify in the playbook which is an abstraction to the group of 
-            - network elements that need to be configured.
+             on which this template has to be applied is identified. Usually we specify the ansible keyword {{ inventory_hostname }} 
+             which we specify in the playbook which is an abstraction to the group of 
+             network elements that need to be configured.
         required: true
         default: null
         choices: []
     username:
         description:
             - Configures the username to use to authenticate the connection to the remote device. The value of 
-            - username is used to authenticate the SSH session. The value has to come from inventory file ideally,
-            - you can even enter it as variable.
+             username is used to authenticate the SSH session. The value has to come from inventory file ideally,
+             you can even enter it as variable.
         required: true
         default: 
         choices: []
     password:
         description:
             - Configures the password to use to authenticate the connection to the remote device. 
-            - The value of password is used to authenticate the SSH session.The value has to come from inventory file ideally,
-            - you can even enter it as variable.
+             The value of password is used to authenticate the SSH session.The value has to come from inventory file ideally,
+             you can even enter it as variable.
         required: true
         default: 
         choices: []
     enablePassword:
         description:
             - Inputs the enable password, in case its enables in the device. This get ignored if the device is not demanding an enable password. 
-            - The value of password is used to enter the congig mode.The default value is empty string. The value has to come from inventory file ideally,
-            - you can even enter it as variable.
+             The value of password is used to enter the congig mode.The default value is empty string. The value has to come from inventory file ideally,
+             you can even enter it as variable.
         required: false
         default: 
         choices: []
     deviceType:
         description:
             - This specifies the type of device against which the image is downloaded. The value has to come from inventory file ideally,
-            - you can even enter it as variable.
+             you can even enter it as variable.
         required: Yes
         default: null
         choices: []
@@ -102,8 +100,8 @@ options:
     rcpath:
         description:
             - This specifies the absolute path of the config file will be located in the server. In case u are using the 
-            relative path as the variable value, you need to specify the root folder for the user of the server which u 
-            have specified.
+             relative path as the variable value, you need to specify the root folder for the user of the server which u 
+             have specified.
         required: Yes
         default: null
         choices: []
@@ -121,16 +119,14 @@ options:
         choices: []
 Notes:
     - For help in developing on modules, should you be so inclined, please read 
-    Community Information & Contributing, Helping Testing PRs and Developing Modules.
-    Module Dependency :
+     Community Information & Contributing, Helping Testing PRs and Developing Modules.
+Module Dependency :
     1. cnos_backup.py
-    2. cnos_utility.py 
-
+    2. cnos_utility.py
 '''
 
 EXAMPLES = '''
-The task/main.yml will look like this
-
+#The task/main.yml will look like this
 ---
 - name: Test Running Config Backup
   cnos_backup: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} outputfile=./results/cnos_backup_{{ inventory_hostname }}_output.txt configType='{{item.configType}}' protocol='{{item.protocol}}' serverip='{{item.serverip}}' rcpath='{{item.rcpath}}' serverusername='{{item.serverusername}}' serverpassword='{{item.serverpassword}}'
@@ -148,9 +144,7 @@ The task/main.yml will look like this
   cnos_backup: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['username']}}  password={{ hostvars[inventory_hostname]['password']}} deviceType={{ hostvars[inventory_hostname]['deviceType']}} outputfile=./results/cnos_backup_{{ inventory_hostname }}_output.txt configType='{{item.configType}}' protocol='{{item.protocol}}' serverip='{{item.serverip}}' rcpath='{{item.rcpath}}' serverusername='{{item.serverusername}}' serverpassword='{{item.serverpassword}}'
   with_items: "{{test_config_data4}}"
 
-
-In the vars/main.yml will look like this
-
+#In the vars/main.yml will look like this
 ---
 test_config_data1:
   - {configType: running-config, protocol: "sftp", serverip: "10.241.106.118", rcpath: "/root/cnos/G8272-running-config.txt",  serverusername: "root", serverpassword: "root123"}
@@ -164,21 +158,22 @@ test_config_data3:
 test_config_data4:
   - {configType: startup-config, protocol: "tftp", serverip: "10.241.106.118", rcpath: "/anil/G8272-startup-config.txt",  serverusername: "root", serverpassword: "root123"}
 
-
-In the inventory file u specify like this
-
-[cnos_backup_sample]
-10.241.107.39  username=<username> password=<password> deviceType=g8272_cnos 
-10.241.107.40  username=<username> password=<password> deviceType=g8272_cnos 
+---
+#In the inventory file u specify like this
+inventory sample: |
+    [cnos_backup_sample]
+    10.241.107.39  username=<username> password=<password> deviceType=g8272_cnos 
+    10.241.107.40  username=<username> password=<password> deviceType=g8272_cnos 
 
 '''
 
 RETURN = '''
-
-On successful execution, the method returns and empty string with a message "Config file tranferred to server"
+---
+return value: |
+ On successful execution, the method returns and empty string with a message "Config file tranferred to server"
  in json format. But upon any failure, the output will be the error display string. You may have to rectify 
  the error and try again.
-
+ 
 '''
 #---- Documentation Ends ----------------------------------------------------#
 #---- Logic Start ------------------------------------------------------------###

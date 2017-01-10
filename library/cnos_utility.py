@@ -24,7 +24,7 @@ def interfaceConfig(obj,deviceType, prompt,timeout,interfaceArg1,interfaceArg2,i
     newPrompt = prompt
     if(interfaceArg1 == "port-aggregation"):
         command = command + " " +interfaceArg1 + " " + interfaceArg2 + "\n"
-        debugOutput(command)
+        #debugOutput(command)
         value = checkSanityofVariable(deviceType, "portchannel_interface_value", interfaceArg2)
         if(value == "ok"):
             newPrompt = "(config-if)#"
@@ -972,12 +972,12 @@ def interfaceLevel2Config(obj, deviceType, prompt, timeout, interfaceL2Arg1, int
         return retVal
     
     command = command + "\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal + waitForDeviceResponse(command, prompt, timeout, obj)
     #Come back to config mode
     if((prompt == "(config-if)#") or (prompt == "(config-if-range)#")):
         command = "exit \n" 
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "(config)#", timeout, obj)
     
     return retVal
@@ -1026,7 +1026,7 @@ def routerConfig(obj, deviceType, prompt, timeout,protocol, asNum, routerArg1, r
         if(value == "ok"):
             #BGP command happens here. It creates if not present
             command = command +asNum+"\n"
-            debugOutput(command)
+            #debugOutput(command)
             retVal = waitForDeviceResponse(command, "(config-router)#", timeout, obj)
             retVal = retVal + bgpConfig(obj, deviceType, "(config-router)#", timeout, routerArg1, routerArg2, routerArg3,
                                         routerArg4, routerArg5, routerArg6, routerArg7, routerArg8)
@@ -1146,7 +1146,7 @@ def bgpNeighborAFConfig(obj, deviceType, prompt, timeout, bgpNeighborAFArg1, bgp
         return retVal
     
     command = command +"\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal + waitForDeviceResponse(command, prompt, timeout, obj)
     command = "exit \n"
     retVal = retVal + waitForDeviceResponse(command, "(config-router-neighbor)#", timeout, obj)  
@@ -1164,7 +1164,7 @@ def bgpNeighborConfig(obj, deviceType, prompt, timeout, bgpNeighborArg1, bgpNeig
         value = checkSanityofVariable(deviceType, "bgp_neighbor_address_family", bgpNeighborArg2)
         if(value == "ok"):
             command = command + bgpNeighborArg2 +" unicast \n"
-            debugOutput(command)
+            #debugOutput(command)
             retVal = waitForDeviceResponse(command, "(config-router-neighbor-af)#", timeout, obj)
             retVal = retVal+ bgpNeighborAFConfig(obj, deviceType, "(config-router-neighbor-af)#", timeout, bgpNeighborArg3, bgpNeighborArg4, bgpNeighborArg5)
             return retVal
@@ -1336,7 +1336,7 @@ def bgpNeighborConfig(obj, deviceType, prompt, timeout, bgpNeighborArg1, bgpNeig
         return retVal
     
     command = command +"\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal + waitForDeviceResponse(command, prompt, timeout, obj)
     command = "exit \n"
     retVal = retVal + waitForDeviceResponse(command, "(config-router)#", timeout, obj)  
@@ -1532,7 +1532,7 @@ def bgpAFConfig(obj, deviceType, prompt, timeout, bgpAFArg1, bgpAFArg2, bgpAFArg
         retVal = "Error-194"
         return retVal
     command = command +"\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal + waitForDeviceResponse(command, prompt, timeout, obj)
     command = "exit \n"
     retVal = retVal + waitForDeviceResponse(command, "(config-router)#", timeout, obj)  
@@ -1545,7 +1545,7 @@ def bgpConfig(obj, deviceType, prompt, timeout, bgpArg1, bgpArg2, bgpArg3, bgpAr
     #Wait time to get response from server
     timeout = timeout
     if(bgpArg1 == "address-family") :
-        ##debugOutput(bgpArg1)
+        #debugOutput(bgpArg1)
         command = command + bgpArg1 + " "
         value = checkSanityofVariable(deviceType, "bgp_address_family", bgpArg2)
         if(value == "ok"):
@@ -1562,22 +1562,22 @@ def bgpConfig(obj, deviceType, prompt, timeout, bgpArg1, bgpArg2, bgpArg3, bgpAr
         ##debugOutput(bgpArg1)
         command = command + bgpArg1 + " "
         if(bgpArg2 == "always-compare-med"):
-            ##debugOutput(bgpArg2)
+            #debugOutput(bgpArg2)
             command = command+bgpArg2
         elif(bgpArg2 == "compare-confed-aspath"):
-            ##debugOutput(bgpArg2)
+            #debugOutput(bgpArg2)
             command = command+bgpArg2
         elif(bgpArg2 == "compare-routerid"):
-            ##debugOutput(bgpArg2)
+            #debugOutput(bgpArg2)
             command = command+bgpArg2
         elif(bgpArg2 == "dont-compare-originator-id"):
-            ##debugOutput(bgpArg2)
+            #debugOutput(bgpArg2)
             command = command+bgpArg2
         elif(bgpArg2 == "tie-break-on-age"):
-            ##debugOutput(bgpArg2)
+            #debugOutput(bgpArg2)
             command = command+bgpArg2
         elif(bgpArg2 == "as-path"):
-            ##debugOutput(bgpArg2)
+            #debugOutput(bgpArg2)
             command = command+bgpArg2+ " "
             if(bgpArg3 == "ignore" or bgpArg3 == "multipath-relax"):
                 command = command+bgpArg3
@@ -1585,7 +1585,7 @@ def bgpConfig(obj, deviceType, prompt, timeout, bgpArg1, bgpArg2, bgpArg3, bgpAr
                 retVal = "Error-179"
                 return retVal
         elif(bgpArg2 == "med"):
-            ##debugOutput(bgpArg2)
+            #debugOutput(bgpArg2)
             command = command+bgpArg2+ " "
             if(bgpArg3 == "confed" or 
                bgpArg3 == "missing-as-worst" or 
@@ -1601,7 +1601,7 @@ def bgpConfig(obj, deviceType, prompt, timeout, bgpArg1, bgpArg2, bgpArg3, bgpAr
             return retVal
             
     elif(bgpArg1 == "bgp" ) :
-        ##debugOutput(bgpArg1)
+        #debugOutput(bgpArg1)
         command = command + bgpArg1 + " as-local-count "
         value = checkSanityofVariable(deviceType, "bgp_bgp_local_count", bgpArg2)
         if(value == "ok"):
@@ -1611,7 +1611,7 @@ def bgpConfig(obj, deviceType, prompt, timeout, bgpArg1, bgpArg2, bgpArg3, bgpAr
             return retVal
              
     elif(bgpArg1 == "cluster-id" ) :
-        ##debugOutput(bgpArg1)
+        #debugOutput(bgpArg1)
         command = command + bgpArg1 + " "
         value = checkSanityofVariable(deviceType, "cluster_id_as_ip", bgpArg2)
         if(value == "ok"):
@@ -1625,7 +1625,7 @@ def bgpConfig(obj, deviceType, prompt, timeout, bgpArg1, bgpArg2, bgpArg3, bgpAr
                 return retVal
         
     elif(bgpArg1 == "confederation" ) :
-        ##debugOutput(bgpArg1)
+        #debugOutput(bgpArg1)
         command = command + bgpArg1 + " "
         if(bgpArg2 == "identifier"):
             value = checkSanityofVariable(deviceType, "confederation_identifier", bgpArg3)
@@ -1646,15 +1646,15 @@ def bgpConfig(obj, deviceType, prompt, timeout, bgpArg1, bgpArg2, bgpArg3, bgpAr
             return retVal
         
     elif(bgpArg1 == "enforce-first-as" ) :
-        ##debugOutput(bgpArg1)
+        #debugOutput(bgpArg1)
         command = command + bgpArg1
         
     elif(bgpArg1 == "fast-external-failover" ) :
-        ##debugOutput(bgpArg1)
+        #debugOutput(bgpArg1)
         command = command + bgpArg1
         
     elif(bgpArg1 == "graceful-restart" ) :
-        ##debugOutput(bgpArg1)
+        #debugOutput(bgpArg1)
         command = command + bgpArg1 + " stalepath-time "
         value = checkSanityofVariable(deviceType, "stalepath_delay_value", bgpArg2)
         if(value == "ok"):
@@ -1694,7 +1694,7 @@ def bgpConfig(obj, deviceType, prompt, timeout, bgpArg1, bgpArg2, bgpArg3, bgpAr
                 value = checkSanityofVariable(deviceType, "neighbor_as", bgpArg3)
                 if(value == "ok"):
                    command = command + bgpArg3 + "\n"
-                   debugOutput(command)
+                   #debugOutput(command)
                    retVal = waitForDeviceResponse(command, "(config-router-neighbor)#", timeout, obj)
                    retVal = retVal+ bgpNeighborConfig(obj, deviceType, "(config-router-neighbor)#", timeout, bgpArg4, bgpAgr5, bgpArg6, bgpArg7, bgpArg8)
                    return retVal 
@@ -1748,11 +1748,11 @@ def bgpConfig(obj, deviceType, prompt, timeout, bgpArg1, bgpArg2, bgpArg3, bgpAr
         retVal = "Error-192"
         return retVal
     command = command + "\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal + waitForDeviceResponse(command, prompt, timeout, obj)
     #Come back to config mode
     command = "exit \n" 
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal+ waitForDeviceResponse(command, "(config)#", timeout, obj)
     
     return retVal
@@ -1772,7 +1772,7 @@ def vlanConfig(obj, deviceType, prompt, timeout, vlanArg1, vlanArg2, vlanArg3, v
         value = checkSanityofVariable(deviceType, "vlan_access_map_name", vlanArg2)
         if(value == "ok"):
             command = command + vlanArg2 +" \n"
-            debugOutput(command)
+            #debugOutput(command)
             retVal = waitForDeviceResponse(command, "(config-access-map)#", timeout, obj)
             retVal = retVal + vlanAccessMapConfig(obj, deviceType, "(config-access-map)#", timeout, vlanArg3, vlanArg4, vlanArg5)
             return retVal
@@ -1829,7 +1829,7 @@ def vlanConfig(obj, deviceType, prompt, timeout, vlanArg1, vlanArg2, vlanArg3, v
     
     #debugOutput(command)
     command = command + "\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal+ waitForDeviceResponse(command, prompt, timeout, obj) 
     return retVal;
 #EOM
@@ -1867,7 +1867,7 @@ def vlanAccessMapConfig(obj, deviceType, prompt, timeout, vlanArg3, vlanArg4, vl
          return retVal
     
     command = command + "\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal+ waitForDeviceResponse(command, prompt, timeout, obj) 
     return retVal;
 #EOM
@@ -1878,7 +1878,7 @@ def createVlan(obj, deviceType, prompt, timeout, vlanArg1, vlanArg2, vlanArg3, v
     
     #vlan config command happens here. It creates if not present
     command = "vlan "+vlanArg1+"\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = waitForDeviceResponse(command, prompt, timeout, obj)
     command = ""
     if(vlanArg2 == "name"):
@@ -2046,11 +2046,11 @@ def createVlan(obj, deviceType, prompt, timeout, vlanArg1, vlanArg2, vlanArg3, v
         retVal = "Error-154"
         return retVal
     command = command + "\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal +"\n" + waitForDeviceResponse(command, prompt, timeout, obj)
     #Come back to config mode
     command = "exit \n" 
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal+ waitForDeviceResponse(command, "(config)#", timeout, obj)
     
     return retVal 
@@ -2208,7 +2208,7 @@ def vlagConfig(obj, deviceType, prompt, timeout, vlagArg1, vlagArg2, vlagArg3, v
     
     #debugOutput(command)
     command = command + "\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal+ waitForDeviceResponse(command, "(config)#", timeout, obj)                                
     
     return retVal 
@@ -2236,13 +2236,13 @@ def doStartupConfigBackUp(protocol, timeout, confServerIp, confPath, confServerU
     #config backup command happens here
     if(protocol == "ftp"):
         command = "cp startup-config "+protocol+" "+protocol+"://"+username+"@"+server+"/"+path+" vrf management\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(password, "#", timeout, obj)
     elif(protocol == "tftp"):
         command = "cp startup-config "+protocol+" "+protocol+"://"+server+"/"+path+" vrf management\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "#", 3, obj)
     else:
         return "Error-110"
@@ -2271,7 +2271,7 @@ def doSecureStartupConfigBackUp(protocol, timeout, confServerIp, confPath, confS
     
     #config backup command happens here
     command = "cp startup-config "+protocol+" "+protocol+"://"+username+"@"+server+"/"+path+" vrf management\n"
-    debugOutput(command)
+    #debugOutput(command)
     response = waitForDeviceResponse(command, "(yes/no)", 3, obj)
     if(response.lower().find("error-101")):
         command = password+"\n"
@@ -2280,20 +2280,20 @@ def doSecureStartupConfigBackUp(protocol, timeout, confServerIp, confPath, confS
     retVal = retVal+response
     if(protocol == "scp"):
         command = "yes \n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "timeout:", 3, obj)
         command = "0\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
     elif(protocol == "sftp"):
         command = "yes \n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
     else:
         return "Error-110"
             
     #Password entry happens here
-    debugOutput(command)
+    #debugOutput(command)
     command = password+"\n"
     retVal = retVal+ waitForDeviceResponse(command, "#", timeout, obj)
     
@@ -2322,15 +2322,15 @@ def doStartUpConfigRollback(protocol, timeout, confServerIp, confPath, confServe
     #config backup command happens here
     if(protocol == "ftp"):
         command = "cp "+protocol+" "+protocol+"://"+username+"@"+server+"/"+path+" startup-config vrf management\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "[n]", timeout, obj)
         command = "y\n"
         retVal = retVal+ waitForDeviceResponse(password, "#", timeout, obj)
     elif(protocol == "tftp"):
         command = "cp "+protocol+" "+protocol+"://"+server+"/"+path+" startup-config vrf management\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "[n]", timeout, obj)
         command = "y\n"
         retVal = retVal+ waitForDeviceResponse(command, "#", timeout, obj)
@@ -2364,7 +2364,7 @@ def doSecureStartUpConfigRollback(protocol, timeout, confServerIp, confPath, con
     #cp sftp sftp://root@10.241.106.118/cnos_config/running_config.conf startup-config vrf management
     command = "cp "+protocol+" "+protocol+"://"+username+"@"+server+"/"+path+" startup-config vrf management \n"
     
-    debugOutput(command)
+    #debugOutput(command)
     response = waitForDeviceResponse(command, "(yes/no)", 3, obj)
     if(response.lower().find("error-101")):
         command = password+"\n"
@@ -2375,20 +2375,20 @@ def doSecureStartUpConfigRollback(protocol, timeout, confServerIp, confPath, con
     retVal = retVal+response
     if(protocol == "scp"):
         command = "yes \n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "timeout:", 3, obj)
         command = "0\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
     elif(protocol == "sftp"):
         command = "yes \n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
     else:
         return "Error-110"
             
     #Password entry happens here
-    debugOutput(command)
+    #debugOutput(command)
     command = password+"\n"
     retVal = retVal+ waitForDeviceResponse(command, "[n]", timeout, obj)
     command = "y\n"
@@ -2419,13 +2419,13 @@ def doRunningConfigBackUp(protocol, timeout, confServerIp, confPath, confServerU
     #config backup command happens here
     if(protocol == "ftp"):
         command = "cp running-config "+protocol+" "+protocol+"://"+username+"@"+server+"/"+path+" vrf management\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(password, "#", timeout, obj)
     elif(protocol == "tftp"):
         command = "cp running-config "+protocol+" "+protocol+"://"+server+"/"+path+" vrf management\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "#", 3, obj)
     else:
         return "Error-110"
@@ -2455,7 +2455,7 @@ def doSecureRunningConfigBackUp(protocol, timeout, confServerIp, confPath, confS
     
     #config backup command happens here
     command = "cp running-config "+protocol+" "+protocol+"://"+username+"@"+server+"/"+path+" vrf management\n"
-    debugOutput(command)
+    #debugOutput(command)
     response = waitForDeviceResponse(command, "(yes/no)", 3, obj)
     if(response.lower().find("error-101")):
         command = password+"\n"
@@ -2464,20 +2464,20 @@ def doSecureRunningConfigBackUp(protocol, timeout, confServerIp, confPath, confS
     retVal = retVal+response
     if(protocol == "scp"):
         command = "yes \n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "timeout:", 3, obj)
         command = "0\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
     elif(protocol == "sftp"):
         command = "yes \n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
     else:
         return "Error-110"
             
     #Password entry happens here
-    debugOutput(command)
+    #debugOutput(command)
     command = password+"\n"
     retVal = retVal+ waitForDeviceResponse(command, "#", timeout, obj)
     
@@ -2506,13 +2506,13 @@ def doRunningConfigRollback(protocol, timeout, confServerIp, confPath, confServe
     #config backup command happens here
     if(protocol == "ftp"):
         command = "cp "+protocol+" "+protocol+"://"+username+"@"+server+"/"+path+" running-config vrf management\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(password, "#", timeout, obj)
     elif(protocol == "tftp"):
         command = "cp "+protocol+" "+protocol+"://"+server+"/"+path+" running-config vrf management\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "#", timeout, obj)
     else:
         return "Error-110"
@@ -2544,7 +2544,7 @@ def doSecureRunningConfigRollback(protocol, timeout, confServerIp, confPath, con
     #cp sftp sftp://root@10.241.106.118/cnos_config/running_config.conf running-config vrf management
     command = "cp "+protocol+" "+protocol+"://"+username+"@"+server+"/"+path+" running-config vrf management \n"
     
-    debugOutput(command)
+    #debugOutput(command)
     response = waitForDeviceResponse(command, "(yes/no)", 3, obj)
     if(response.lower().find("error-101")):
         command = password+"\n"
@@ -2554,20 +2554,20 @@ def doSecureRunningConfigRollback(protocol, timeout, confServerIp, confPath, con
 
     if(protocol == "scp"):
         command = "yes \n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "timeout:", 3, obj)
         command = "0\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
     elif(protocol == "sftp"):
         command = "yes \n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
     else:
         return "Error-110"
             
     #Password entry happens here
-    debugOutput(command)
+    #debugOutput(command)
     command = password+"\n"
     retVal = retVal+ waitForDeviceResponse(command, "#", timeout, obj)
     
@@ -2602,11 +2602,11 @@ def doImageTransfer(protocol, timeout, imgServerIp, imgPath, imgType, imgServerU
         command = "cp "+protocol+" "+protocol+"://"+server+"/"+path+" system-image "+type+" vrf management\n"
     else:
         return "Error-110"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal+ waitForDeviceResponse(command, "[n]", 3, obj)
     #Confirmation command happens here
     command = "y\n"
-    debugOutput(command)
+    #debugOutput(command)
     #retVal = retVal+ waitForDeviceResponse(command, "(yes/no)?", 3, obj)
     #command = "Yes \n"
     #debugOutput(command)
@@ -2614,11 +2614,11 @@ def doImageTransfer(protocol, timeout, imgServerIp, imgPath, imgType, imgServerU
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
         #Password entry happens here Only for FTP
         command = password+" \n"
-        debugOutput(command)
+        #debugOutput(command)
     #Change to standby image y
     retVal = retVal+ waitForDeviceResponse(command, "[n]", timeout, obj)
     command = "y\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal+ waitForDeviceResponse(command, "#", timeout, obj)
     return retVal 
 #EOM
@@ -2646,36 +2646,36 @@ def doSecureImageTransfer(protocol, timeout, imgServerIp, imgPath, imgType, imgS
     
     #Image transfer command happens here
     command = "cp "+protocol+" "+protocol+"://"+username+"@"+server+"/"+path+" system-image "+type+" vrf management \n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal+ waitForDeviceResponse(command, "[n]", 3, obj)
     #Confirmation command happens here
     if(protocol == "scp"):
         command = "y\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "(yes/no)?", 3, obj)
         command = "Yes\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "timeout:", 3, obj)
         command = "0\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
     elif(protocol == "sftp"):
         command = "y\n" 
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "(yes/no)?", 3, obj)
         command = "Yes\n"
-        debugOutput(command)
+        #debugOutput(command)
         retVal = retVal+ waitForDeviceResponse(command, "Password:", 3, obj)
     else:
         return "Error-110"
       
     #Password entry happens here
     command = password+"\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal+ waitForDeviceResponse(command, "[n]", timeout, obj)
     #Change to standby image y
     command = "y\n"
-    debugOutput(command)
+    #debugOutput(command)
     retVal = retVal+ waitForDeviceResponse(command, "#", timeout, obj)
     return retVal 
 #EOM
@@ -2831,10 +2831,10 @@ def getRuleStringForVariable(ruleFile, variableId):
     retVal = ""
     with open(ruleFile, 'r') as f:
         for line in f:
-            ##debugOutput(line)
+            #debugOutput(line)
             if(':' in line):
                 data = line.split(':')
-                ##debugOutput(data[0])
+                #debugOutput(data[0])
                 if(data[0].strip() == variableId):
                    retVal = line
     return retVal
@@ -2881,13 +2881,13 @@ def validateValueAgainstRule(ruleString, variableValue):
         valLower = val_range[0].strip()
         valHigher = val_range[1].strip()
         if((checkInteger(valLower) != True) or (checkInteger(valHigher) != True)):
-            debugOutput("Error-114")
+            #debugOutput("Error-114")
             return "Error-114"
         result = (int(valLower) in r) and (int(valHigher) in r) and (int(valLower) < int(valHigher))
         if(result == True):
             return "ok"
         else:
-            debugOutput("Error-113")
+            #debugOutput("Error-113")
             return "Error-113"
 
     elif(variableType == "INTEGER_OPTIONS"):
@@ -2914,7 +2914,7 @@ def validateValueAgainstRule(ruleString, variableValue):
         long_range = varRange.split('-')
         r = range(long(long_range[0].strip()), long(long_range[1].strip()))
         if(checkLong(variableValue)!=True):
-            ##debugOutput(variableValue)
+            #debugOutput(variableValue)
             return "Error-116"
         result = long(variableValue) in r
         if(result == True):

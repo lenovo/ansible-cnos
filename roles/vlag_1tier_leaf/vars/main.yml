@@ -3,8 +3,7 @@ vlag_1tier_leaf_data:
   - {}
 
 vlag_1tier_leaf_switch1_data:
-  - {flag: leaf_switch1, stp_mode1: disable, port_range1: "1/3", port_range2: "1/13", portchannel_interface_number1: 1001, portchannel_mode1: active, slot_chassis_number1: 13, switchport_mode1: trunk }
+  - {flag: leaf_switch1, stp_mode1: disable, slot_chassis_number1: "1/1-2", portchannel_interface_number1: 1001, portchannel_mode1: active, slot_chassis_number2: 1/48, switchport_mode1: trunk }
 
 vlag_1tier_leaf_switch2_data:
-  - {flag: leaf_switch2, stp_mode1: disable, port_range1: "1/2", port_range2: "1/13", portchannel_interface_number1: 1002, portchannel_mode1: active, slot_chassis_number1: 13, switchport_mode1: trunk}
-
+  - {flag: leaf_switch2, stp_mode1: disable, slot_chassis_number1: "1/1-2", portchannel_interface_number1: 1002, portchannel_mode1: active, slot_chassis_number2: 1/48, switchport_mode1: trunk}

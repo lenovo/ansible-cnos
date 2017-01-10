@@ -199,9 +199,13 @@ def  main():
                 command = line
                 if not line.endswith("\n"):
                     command = command+"\n"
-                output = output + cnos_utility.waitForDeviceResponse(command,"#", 2, remote_conn)
+                reponse = cnos_utility.waitForDeviceResponse(command,"#", 2, remote_conn)    
+                errorMsg = cnos_utility.checkOutputForError(reponse)
+                output = output + response
+                if(errorMsg != None):
+                    break # To cater to Mufti case
+                
 	#Write to memory
-    #Write to memory
     output = output + cnos_utility.waitForDeviceResponse("save\n","#", 3, remote_conn)
 	#Write output to file
     file = open(outputfile, "a")

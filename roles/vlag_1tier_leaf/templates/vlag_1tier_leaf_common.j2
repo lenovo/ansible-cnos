@@ -2,17 +2,17 @@
 #
 #STP configuration
 spanning-tree mode {{item.stp_mode1}}
-
+#
 #LACP configuration
-interface ethernet {{item.port_range1}}
+interface ethernet {{item.slot_chassis_number1}}
 aggregation-group {{item.portchannel_interface_number1}} mode {{item.portchannel_mode1}}
 exit
-
+#
 #VLAN configuration
-interface port-aggregation {{item.slot_chassis_number1}}
+interface port-aggregation {{item.portchannel_interface_number1}}
 bridge-port mode {{item.switchport_mode1}}
 exit
-interface ethernet {{item.port_range2}}
+interface ethernet {{item.slot_chassis_number2}}
 bridge-port mode {{item.switchport_mode1}}
 exit
 

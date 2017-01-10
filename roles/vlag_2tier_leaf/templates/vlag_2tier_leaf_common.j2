@@ -1,11 +1,13 @@
 #Common Commands for Tier2 leaf nodes
+#
 #STP configuration
 spanning-tree mode {{item.stp_mode1}}
+#
 #LACP configuration
 interface ethernet {{item.slot_chassis_number1}}
 aggregation-group {{item.portchannel_interface_number1}} mode {{item.portchannel_mode1}}
 exit
-
+#
 #VLAN configuration
 interface port-aggregation {{item.portchannel_interface_number1}}
 bridge-port mode {{item.switchport_mode1}}
