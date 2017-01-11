@@ -199,8 +199,8 @@ def  main():
                 command = line
                 if not line.endswith("\n"):
                     command = command+"\n"
-                reponse = cnos_utility.waitForDeviceResponse(command,"#", 2, remote_conn)    
-                errorMsg = cnos_utility.checkOutputForError(reponse)
+                response = cnos_utility.waitForDeviceResponse(command,"#", 2, remote_conn)    
+                errorMsg = cnos_utility.checkOutputForError(response)
                 output = output + response
                 if(errorMsg != None):
                     break # To cater to Mufti case
