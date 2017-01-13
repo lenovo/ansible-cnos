@@ -16,7 +16,7 @@
 ## Documentation
 
 Lenovo documentation can be found here:
-[Lenovo Ansible Documentation](http://ralfss28.labs.lenovo.com:5555/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fansible_for_cnos.html&cp=0_3_1_0)
+[Lenovo Ansible Documentation](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fansible_for_cnos.html&cp=0_3_1_0)
 
 ## License
 

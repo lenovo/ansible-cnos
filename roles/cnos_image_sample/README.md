@@ -1,65 +1,113 @@
-# Ansible Role: CNOS Switch Image Download - Sample
+# Ansible Role: cnos_image_sample - Switch firmware download from a remote server
+---
+<add role description below>
 
-This role is an example on usage of module cnos_image.py in the context of CNOS configurations. The typical use of this module come in downloading image on to the device. In this context, users have the choice of various protocols in uploading the configurations to the servers. Users can use TFTP, FTP , SFTP or SCP in the back up process. You can always look at the Results folder to know the status of your backup operation.
+This role is an example of using the *cnos_image.py* Lenovo module in the context of CNOS switch configuration. This module allows you to work with switch firmware images. It provides a way to download a firmware image to a network device from a remote server using FTP, SFTP, TFTP, or SCP.
+
+The first step is to create a directory from where the remote server can be reached. The next step is to provide the full file path of the image’s location. Authentication details required by the remote server must be provided as well.
+
+By default, this method makes the newly downloaded firmware image the active image, which will be used by the switch during the next restart.
+
+The results of the operation can be viewed in *results* directory.
+
+For more details, see [Lenovo modules for Ansible: cnos_image](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fcnos_image.html&cp=0_3_1_0_4_2).
+
 
 ## Requirements
+---
+<add role requirements information below>
 
-To download image on to a CNOS switch from an SFTP/SCP/FTP/TFTP server.
+- Ansible version 2.2 or later ([Ansible installation documentation](http://docs.ansible.com/ansible/intro_installation.html))
+- Lenovo switches running CNOS version 10.2.1.0 or later
+- an SSH connection to the Lenovo switch (SSH must be enabled on the network device)
+
 
 ## Role Variables
+---
+<add role variables information below>
 
-Available variables are listed below, along with description:
+Available variables are listed below, along with description.
 
-These are the mandatory inventory variables. 
-1. username : User name for the switch
-2. password: Password for the switch
-3. enablePassword : Enable password for the switch. This is not a mandatory parameter.
-4. hostname: Host name for this switch
-5. deviceType : The type of device you are back up. At the moment we support Mars and Jupiter(G8272_cnos, G8296_cnos)
-6. imgpath - This specifies the absolute path of the image file located in the server. In case you are using 
-            the relative path as the variable value, you need to specify the root folder for the user of the 
-            server which u have specified. 
+The following are mandatory inventory variables:
 
-These are the variables that need to be provided at the vars/main.yml
-7. imgType - Image type which you indent to download. The choices for you are 
-            - all   Both Uboot and OS
-            - boot  Uboot only
-            - onie  ONIE image
-            - os    OS only 
-                The values expected are 1. running-config and startup-config
-8. protocol - The protocol which your server would like to interract with device. This include SFTP/SCP/FTP/TFTP
-9. serverip - IP address of the SFTP/SCP/FTP/TFTP serve of your choice
-10. serverusername - The username, preferably username with Read Write permission on  SFTP/SCP/FTP/TFTP server. This is optional for TFTP
-11. serverpassword - The password of the user specified above. This is optional for TFTP
+Variable | Description
+--- | ---
+`username` | Specifies the username used to log into the switch
+`password` | Specifies the password used to log into the switch
+`enablePassword` | Configures the password used to enter Global Configuration command mode on the switch (this is an optional parameter)
+`hostname` | Searches the hosts file at */etc/ansible/hosts* and identifies the IP address of the switch on which the role is going to be applied
+`deviceType` | Specifies the type of device from where the configuration will be backed up (**g8272_cnos** - G8272, **g8296_cnos** - G8296)
+
+The values of the variables used need to be modified to fit the specific scenario in which you are deploying the solution. To change the values of the variables, you need to visits the *vars* directory of each role and edit the *main.yml* file located there. The values stored in this file will be used by Ansible when the template is executed.
+
+The syntax of *main.yml* file for variables is the following:
+
+```
+<template variable>:<value>
+```
+
+You will need to replace the `<value>` field with the value that suits your topology. The `<template variable>` fields are taken from the template and it is recommended that you leave them unchanged.
+
+Variable | Description
+--- | ---
+`imgType` | Specifies the firmware image type to be downloaded (**all** - both Uboot and OS images, **boot** - only the Uboot image, **os** - only the OS image, **onie** - ONIE image)
+`protocol` | Specifies the protocol used by the network device to interact with the remote server from where to download the firmware image (**ftp** - FTP, **sftp** - SFTP, **tftp** - TFTP, **scp** - SCP)
+`serverip` | Specifies the IP Address of the remote server from where the software image will be downloaded
+`imgpath` | Specifies the full file path of the image located on the remote server (in case the relative path is used as the variable value, the root folder for the user of the server needs to be specified)
+`serverusername` | Configures the username for the server relating to the protocol used
+`serverpassword` | Configures the password for the server relating to the protocol used
+
 
 ## Dependencies
+---
+<add dependencies information below>
 
-- username.iptables - configure the firewall and block all ports except those needed for the web server and ssh access.
-- username.common - perform common server configuration
-- /etc/ansible/hosts - You must be editing the /etc/ansible/hosts file with the device information which are designated switches for Image Download. You may refer to cnos_conditional_template_sample for a sample configuration. Its pasted below  as well for your convenience.
+- username.iptables - Configures the firewall and blocks all ports except those needed for web server and SSH access.
+- username.common - Performs common server configuration.
+- cnos_image.py - This modules needs to be present in the *library* directory of the role.
+- cnos_utility.py - This module needs to be present in the PYTHONPATH environment variable set in the Ansible system.
+- /etc/ansible/hosts - You must edit the */etc/ansible/hosts* file with the device information of the switches designated as leaf switches. You may refer to *cnos_image_sample_hosts* for a sample configuration.
+
+Ansible keeps track of all network elements that it manages through a hosts file. Before the execution of a playbook, the hosts file must be set up.
+
+Open the */etc/ansible/hosts* file with root privileges. Most of the file is commented out by using **#**. You can also comment out the entries you will be adding by using **#**. You need to copy the content of the hosts file for the role into the */etc/ansible/hosts* file. The hosts file for the role is located in the main directory of the multiple layer vLAG configuration solution.
+
+```
 [cnos_image_sample]
 10.241.107.39   username=<username> password=<password> deviceType=g8272_cnos
 10.241.107.40   username=<username> password=<password> deviceType=g8272_cnos
-    
-You should change all the Ip Addresses involved appropriately
-- cnos_image.py - this module has to come in the library folder of the role.
-- cnos_utility.py - this module has to come in the PYTHONPATH environment variable set in the Ansible system 
+```
+ 
+**Note:** You need to change the IP addresses to fit your specific topology. You also need to change the `<username>` and `<password>` to the appropriate values used to log into the specific Lenovo network devices.
+
 
 ## Example Playbook
+---
+<add playbook samples below>
 
+To execute an Ansible playbook, use the following command:
+
+```
+ansible-playbook cnos_image_sample.yml -vvv
+```
+
+`-vvv` is an optional verbos command that helps identify what is happening during playbook execution. The playbook for each role is located in the main directory of the solution.
+
+```
   - name: Module to  do image download
    hosts: cnos_image_sample
    gather_facts: no
    connection: local
-
    roles:
     - cnos_image_sample
+```
+
 
 ## License
-
+---
+<add license information below>
 Copyright (C) 2017 Lenovo, Inc.
 
-This Ansible Role is distributed WITHOUT ANY WARRANTY; without even the implied 
-warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+This Ansible Role is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
-See the GNU General Public License for more details <http://www.gnu.org/licenses/>.
+See the [GNU General Public License](http://www.gnu.org/licenses/) for more details.

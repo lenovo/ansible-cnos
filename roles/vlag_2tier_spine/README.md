@@ -1,68 +1,110 @@
-# Ansible Role: VLAG Tier2 Spine Configuration
+# Ansible Role: vlag_2tier_spine - Multiple Layer vLAG Spine Configuration
+---
+<add role description below>
 
-This is a template driven configuration playbook for VLAG Tier 2 Spine configuration.
-This involves four Mars switches and are connected to each other in a North south orientation.
-Here configurations are similiar in the North side and South side of Spine configuration except
-except the peer ip configuration details. Therefore there will be two set of data/vars for each pair
-of switches. This data switching is achieved using a flag specified in /etc/ansible/host file as
-condition. It has value north and south depending on the topology location for each switches.
-Peer ip has to be specified for each spine switches in the /etc/anisble/hosts file with tag id peerip
-This will enable the template to populate it in the run time before execution.
-The configuration commands and its results can be verified in the commands and results folder.
+This is a template driven playbook for a multiple layer vLAG configuration. The role applies to the vLAG peers. The vLAG peers are set up as two pairs that are connected with each other in a North-South orientation. These switches will be referred to as spine switches.
+
+The templates used in this configuration example are different for North and South spine switches. They will be used to configure the spine switches. To separate between North and South spine switches, a condition flag that specifies this will be present in the */etc/anisble/hosts* file. The templates will be executed with different settings for the peer IP configuration that are suitable to each spine switch. The peer IP has to be specified for each spine switch in the */etc/anisble/hosts* file with the tag ID `peerip`. Since there are two pairs of spine switches, there will be two sets of values used in the templates.
+
+The configuration commands and their results can be verified in the *commands* and *results* directories.
+
+For more details, see [Configuring a multiple layer vLAG network](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fconfiguring_a_multiple_layer_vlag_using_ansible.html&cp=0_3_1_0_7).
+
 
 ## Requirements
+---
+<add role requirements information below>
 
-To configure the VLAG Tier 2 Spine configuration using a single template seamlessly using Ansible.
+- Ansible version 2.2 or later ([Ansible installation documentation](http://docs.ansible.com/ansible/intro_installation.html))
+- Lenovo switches running CNOS version 10.2.1.0 or later
+- an SSH connection to the Lenovo switch (SSH must be enabled on the network device)
+
 
 ## Role Variables
+---
+<add role variables information below>
+
+The values of the variables used need to be modified to fit the specific scenario in which you are deploying the solution. To change the values of the variables, you need to visits the *vars* directory of each role and edit the *main.yml* file located there. The values stored in this file will be used by Ansible when the template is executed.
+
+The syntax of *main.yml* file for variables is the following:
+
+```
+<template variable>:<value>
+```
+
+You will need to replace the `<value>` field with the value that suits your topology. The `<template variable>` fields are taken from the template and it is recommended that you leave them unchanged.
+
 Available variables are listed below, along with description:
 
+Variable | Description
+--- | ---
+`username` | Specifies the username used to log into the switch
+`password` | Specifies the password used to log into the switch
+`flag` | Configures the condition flag associated with the switch
+`slot_chassis_number1` | Specifies the ethernet port (*slot number/port number*)
+`portchannel_interface_number1` | Specifies the LAG number (*1-4096*)
+`portchannel_mode1` | Configures the LAG type (**on** - static LAG, **active** - active member of a LACP LAG, **passive** - passive member of a LACP LAG)
+`slot_chassis_number2` | Specifies the ethernet port (*slot number/port number*)
+`portchannel_interface_number2` | Specifies the LAG number (*1-4096*)
+`slot_chassis_number3` | Specifies the ethernet port (*slot number/port number*)
+`portchannel_interface_number3` | Specifies the LAG number (*1-4096*)
+`slot_chassis_number4` | Specifies the ethernet port (*slot number/port number*)
+`portchannel_interface_number4` | Specifies the LAG number (*1-4096*)
+`switchport_mode1` | Configures the switch port mode (**access** - the port can be part of only a single VLAN, **trunk** - the port can be part of any number of VLANs)
+`slot_chassis_number5` | Specifies the ethernet port (*slot number/port number*)
+`stp_mode1` | Configures the STP mode (**mst** - MSTP, **rapid-pvst** - Rapid PVST+, **disable** - STP is disabled)
+`vlag_tier_id1` | Configure the vLAG tier ID (*1-512*)
+`vlag_instance_number1` | Configure the vLAG instance (*1-64*)
+`vlag_instance_number2` | Configure the vLAG instance (*1-64*)
+`vlag_instance_number3` | Configure the vLAG instance (*1-64*)
 
-1. username : User name for the switch
-2. password: Password for the switch
-3. slot_chassis_number1: Specify Slot/chassis number 1
-4. portchannel_interface_number1:Specify a port-channel number 1
-5. portchannel_mode1 : Specify channeling mode
-6. slot_chassis_number2: Specify Slot/Chassis Number 2
-7. portchannel_interface_number2:Specify a port-channel number 2
-8. slot_chassis_number3: Specify Slot/Chassis Number 3
-9. portchannel_interface_number3: Specify a port-channel number 3
-10. slot_chassis_number4: Specify Slot/Chassis Number 4
-11. portchannel_interface_number4: Specify a port-channel number 4
-12. switchport_mode1: Enter the port mode
-13. slot_chassis_number5: Specify Slot/Chassis Number 5
-14. stp_mode1: Spanning Tree operating mode
-15. vlag_tier_id1: VLAG tier-id value
-16. vlag_instance_number1: Port-channel interface identifier 1
-17. vlag_instance_number2: Port-channel interface identifier 2
-18. vlag_instance_number3: Port-channel interface identifier 3
 
 ## Dependencies
+---
+<add dependencies information below>
 
-- username.iptables - configure the firewall and block all ports except those needed for the web server and ssh access.
-- username.common - perform common server configuration
-- /etc/ansible/hosts - You must be editing the /etc/ansible/hosts file with the device information which are designated
-  as north spine and south spine switches. You may refer to vlag_2tier_spine_hosts for a sample configuration. Its pasted below
-  as well for your convineance.
+- username.iptables - Configures the firewall and blocks all ports except those needed for web server and SSH access.
+- username.common - Performs common server configuration.
+- /etc/ansible/hosts - You must edit the */etc/ansible/hosts* file with the device information of the switches designated as spine switches. You may refer to *vlag_2tier_spine_hosts* for a sample configuration.
 
-  [vlag_2tier_spine]
-  10.240.178.76   username=<username> password=<password> deviceType=g8272_cnos condition=north peerip=10.240.178.77
-  10.240.178.77   username=<username> password=<password> deviceType=g8272_cnos condition=north peerip=10.240.178.76
-  10.240.178.78   username=<username> password=<password> deviceType=g8272_cnos condition=south peerip=10.240.178.79
-  10.240.178.79   username=<username> password=<password> deviceType=g8272_cnos condition=south peerip=10.240.178.78
+Ansible keeps track of all network elements that it manages through a hosts file. Before the execution of a playbook, the hosts file must be set up.
+
+Open the */etc/ansible/hosts* file with root privileges. Most of the file is commented out by using **#**. You can also comment out the entries you will be adding by using **#**. You need to copy the content of the hosts file for the role into the */etc/ansible/hosts* file. The hosts file for the role is located in the main directory of the multiple layer vLAG configuration solution.
   
-  You should change all the Ip Addresses involved appropriately
+```
+[vlag_2tier_spine]
+10.240.178.76   username=<username> password=<password> deviceType=g8272_cnos condition=north peerip=10.240.178.77
+10.240.178.77   username=<username> password=<password> deviceType=g8272_cnos condition=north peerip=10.240.178.76
+10.240.178.78   username=<username> password=<password> deviceType=g8272_cnos condition=south peerip=10.240.178.79
+10.240.178.79   username=<username> password=<password> deviceType=g8272_cnos condition=south peerip=10.240.178.78
+```
+**Note:** You need to change the IP addresses, including the IP addresses of the vLAG peers, to fit your specific topology. You also need to change the `<username>` and `<password>` to the appropriate values used to log into the specific Lenovo network devices.
+
 
 ## Example Playbook
+---
+<add playbook samples below>
 
-    - hosts: vlag_2tier_spine
-      roles:
-        - vlag_2tier_spine
+To execute an Ansible playbook, use the following command:
+
+```
+ansible-playbook vlag_2tier_spine.yml -vvv
+```
+
+`-vvv` is an optional verbos command that helps identify what is happening during playbook execution. The playbook for each role of the multiple layer vLAG configuration solution is located in the main directory of the solution.
+
+```
+- hosts: vlag_2tier_spine
+  roles:
+    - vlag_2tier_spine
+```
+
+
 ## License
-
+---
+<add license information below>
 Copyright (C) 2017 Lenovo, Inc.
 
-This Ansible Role is distributed WITHOUT ANY WARRANTY; without even the implied 
-warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+This Ansible Role is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
-See the GNU General Public License for more details <http://www.gnu.org/licenses/>.
+See the [GNU General Public License](http://www.gnu.org/licenses/) for more details.

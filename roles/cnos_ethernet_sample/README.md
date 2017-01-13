@@ -1,108 +1,114 @@
-# Ansible Role: CNOS Switch Interface-Ethernet configurations - Sample
+# Ansible Role: cnos_ethernet_sample - Performs switch ethernet port configuration and state management
+---
+<add role description below>
 
-This role is an example on usage of module cnos_interface.py in the context of CNOS configurations. This module can be used to execute any interface configuration commands. But here we are focussing mainly on interface ethernet configurations. You can also try interface loopback, mgmt and vlan configurations using this module. Apart from many mandatory arguments there are a series of overloaded arguments which will help you to achieve all configuration tasks. Though we have covered many possible ethernet configuration cases in this example, still, please refer to the module documentation and samples to understand and utilize this module to its maximum. The value for the variables specified in the tasks can be provided through the vars/main.yml. You can always look at the Results folder to know the status of your command run operation.
+This role is an example of using the *cnos_interface.py* Lenovo module in the context of CNOS switch configuration. This module allows you to work with interface related configurations. The operators used are overloaded to ensure control over switch interface configurations, such as ethernet ports, loopback interfaces, VLANs, and the management interface.
+
+Apart from the regular device connection related attributes, there are seven interface arguments that will perform further configurations. They are *interfaceArg1*, *interfaceArg2*, *interfaceArg3*, *interfaceArg4*, *interfaceArg5*, *interfaceArg6*, and *interfaceArg7*.
+
+The results of the operation can be viewed in *results* directory.
+
+For more details, see [Lenovo modules for Ansible: cnos_interface](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fcnos_interface.html&cp=0_3_1_0_4_12).
+
 
 ## Requirements
+---
+<add role requirements information below>
 
-To execute any interface-ethernet configurations on a CNOS switch.
+- Ansible version 2.2 or later ([Ansible installation documentation](http://docs.ansible.com/ansible/intro_installation.html))
+- Lenovo switches running CNOS version 10.2.1.0 or later
+- an SSH connection to the Lenovo switch (SSH must be enabled on the network device)
+
 
 ## Role Variables
+---
+<add role variables information below>
 
-Available variables are listed below, along with description:
+Available variables are listed below, along with description.
 
-These are the mandatory inventory variables. 
-1. username : User name for the switch
-2. password: Password for the switch
-3. enablePassword : Enable password for the switch. This is an optional parameter.
-4. hostname: Host name for this switch
-5. deviceType : The type of device you are back up. At the moment we support Mars and Jupiter(G8272_cnos, G8296_cnos)
-6. interfaceRange - This specifies the interface range in which the port aggregation is envisaged
-7. interfaceOption - This specifies the attribute you specify subsequent to interface command. The choices are ethernet, loopback, mgmt, vlan and port-aggregation.
+The following are mandatory inventory variables:
 
-These are the variables that need to be provided at the vars/main.yml
-8. interfaceArg1 - This is an overloaded interface first argument. Please refer to the module documentation 
-				   for detailed description on usage. Value of these argument depends on the configuration context 
-				   and choices are given below.
- 			       choices: [aggregation-group, bfd, bridgeport, description, duplex, flowcontrol, ip, ipv6, 
- 			       lacp, lldp, load-interval, mac, mac-address, mac-learn, microburst-detection, mtu, service,
- 			       service-policy, shutdown, snmp, spanning-tree, speed, storm-control, vlan, vrrp, port-aggregation]
-9. interfaceArg2 - This is an overloaded interface second argument. Please refer to the module documentation 
-				   for detailed description on usage. Value of these argument depends on the configuration context 
-				   and choices are given below.
-              	   choices: [aggregation-group number, access or mode or trunk, description, auto or full or half,
-        		   recieve or send, port-priority, suspend-individual, timeout,receive or transmit or 
-        		   trap-notification, tlv-select, Load interval delay in seconds, counter, Name for the MAC Access
-        		   List, mac-address in HHHH.HHHH.HHHH format, THRESHOLD  Value in unit of buffer cell, <64-9216>  
-        		   MTU in bytes:<64-9216> for L2 packet,<576-9216> for L3 IPv4 packet, <1280-9216> for L3 IPv6 packet,
-        		   enter the instance id, input or output, copp-system-policy, type, 1000  or  10000  or   40000 or
-        		   auto, broadcast or multicast or unicast, disable or enable or egress-only, Virtual router 
-        		   identifier, destination-ip or destination-mac or destination-port or source-dest-ip or
-        		   source-dest-mac or source-dest-port or source-interface or source-ip or source-mac or source-port]
-10. interfaceArg3 - This is an overloaded interface third argument. Please refer to the module documentation
-                   for detailed description on usage. Value of these argument depends on the configuration context 
-                   and choices are given below.
-              	   choices: [active or on or passive, on or off, LACP port priority, long or short, link-aggregation
-              	   or mac-phy-status or management-address or max-frame-size or port-description or 
-              	   port-protocol-vlan or port-vlan or power-mdi or protocol-identity or system-capabilities or
-              	   system-description or system-name or vid-management or vlan-name, counter for load interval, 
-              	   policy input name, all or Copp class name to attach, qos, queing, Enter the allowed traffic level,
-              	   ipv6]
-11. interfaceArg4 - This is an overloaded interface fourth argument. Please refer to the module documentation 
-					for detailed description on usage. Value of these argument depends on the configuration context
-					and choices are given below.
-                    choices: [key-chain, key-id, keyed-md5 or keyed-sha1 or meticulous-keyed-md5 or 
-                    meticulous-keyed-sha1 or simple, Interval value in milliseconds, Destination IP (Both IPV4 and
-                    IPV6),in or out, MAC address, Time-out value in seconds, class-id, request, Specify the IPv4
-                    address, OSPF area ID as a decimal value, OSPF area ID in IP address format, anycast or 
-                    secondary, ethernet, vlan, MAC (hardware) address in HHHH.HHHH.HHHH format, Load interval delay 
-                    in seconds, Specify policy input name, input or output, cost, port-priority, BFD minimum receive
-                    interval,source-interface]
-12. interfaceArg5 - This is an overloaded interface fifth argument. Please refer to the module documentation
-					for detailed description on usage. Value of these argument depends on the configuration context 
-					and choices are given below.
-              		choices: [name of key-chain,  key-Id Value, key-chain , key-id, BFD minimum receive interval, 
-              		Value of Hello Multiplier, admin-down or multihop or non-persistent, Vendor class-identifier name, 
-              		bootfile-name or host-name or log-server or ntp-server or tftp-server-name, Slot/chassis number, 
-              		Vlan interface, Specify policy input name, Port path cost or auto, Port priority increments of 32]
-12. interfaceArg6 - This is an overloaded interface sixth argument. Please refer to the module documentation 
-					for detailed description on usage. Value of these argument depends on the configuration context
-					and choices are given below.
-              		choices: [Authentication key string, name of key-chain, key-Id Value, Value of Hello Multiplier,
-              		admin-down or non-persistent]
-13. interfaceArg7 - This is an overloaded interface seventh argument. Please refer to the module documentation 
-					for detailed description on usage. Value of these argument depends on the configuration context
-					and choices are given below.
-              		choices: [Authentication key string, admin-down]
+Variable | Description
+--- | ---
+`username` | Specifies the username used to log into the switch
+`password` | Specifies the password used to log into the switch
+`enablePassword` | Configures the password used to enter Global Configuration command mode on the switch (this is an optional parameter)
+`hostname` | Searches the hosts file at */etc/ansible/hosts* and identifies the IP address of the switch on which the role is going to be applied
+`deviceType` | Specifies the type of device from where the configuration will be backed up (**g8272_cnos** - G8272, **g8296_cnos** - G8296)
+
+The values of the variables used need to be modified to fit the specific scenario in which you are deploying the solution. To change the values of the variables, you need to visits the *vars* directory of each role and edit the *main.yml* file located there. The values stored in this file will be used by Ansible when the template is executed.
+
+The syntax of *main.yml* file for variables is the following:
+
+```
+<template variable>:<value>
+```
+
+You will need to replace the `<value>` field with the value that suits your topology. The `<template variable>` fields are taken from the template and it is recommended that you leave them unchanged.
+
+Variable | Description
+--- | ---
+`interfaceOption` | Specifies the type of the interface that will be configured (**ethernet** - ethernet port, **loopback** - loopback interface, **vlan** - VLAN, **mgmt** - management interface, **port-aggregation** - Link Aggregation Group)
+`interfaceRange` | Specifies the interface range that will be configured
+`interfaceArg1` | This is an overloaded BGP variable. Please refer to the [cnos_interface module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_interface.html?cp=0_3_1_0_2_12) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: **aggregation-group**, **bfd**, **bridge-port**, **description**, **duplex**, **flowcontrol**, **ip**, **ipv6**, **lacp**, **lldp**, **load-interval**, **mac**, **mac-address**, **mac-learn**, **microburst-detection**, **mtu**, **service**, **service-policy**, **shutdown**, **snmp**, **spanning-tree**, **speed**, **storm-control**, **vlan**, **vrrp**, **port-aggregation**.
+`interfaceArg2` | This is an overloaded BGP variable. Please refer to the [cnos_interface module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_interface.html?cp=0_3_1_0_2_12) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: specify a LAG number, **authentication**, **echo**, **ipv4**, **ipv6**, **interval**, **neighbor**, **access**, **mode**, **trunk**, interface description, **auto**, **full**, **half**, **receive**, **send**, **access-group**, **arp**, **dhcp**, **port**, **port-unreachable**, **redirects**, **router**, **unreachables**, **address**, **link-local**, **port-priority**, **suspend-individual**, **timeout**, **transmit**, **trap-notification**, **tlv-select**, load interval delay, **counter**, name for the MAC access group, MAC address in XXXX.XXXX.XXXX format, threshold value, MTU in bytes, instance ID to map to the EVC, **input**, **output**, **copp-system-policy**, **type**, **bpdufilter**, **bpduguard**, **cost**, **enable**, **disable**, **guard**, **link-type**, **mst**, **port**, **port-priority**, **vlan**, **auto**, 1000, 10000, 40000, **broadcast**, **unicast**, **multicast**, **egress-only**, **destination-ip**, **destination-mac**, **destination-port**, **source-dest-ip**, **source-dest-mac**, **source-dest-port**, **source-interface**, **source-ip**, **source-mac**, **source-port**.
+`interfaceArg3` | This is an overloaded BGP variable. Please refer to the [cnos_interface module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_interface.html?cp=0_3_1_0_2_12) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: **active**, **passive**, **on**, **keyed-md5**, **keyed-sha1**, **meticulous-keyed-md5**, **meticulous-keyed-sha1**, **simple**, **authentication**, **echo**, **interval**, interval value, source IP address, **off**, ACL name, IP address of the ARP entry, **timeout**, **client**, **relay**, **area**, **multi-area**, **dhcp**, IPv6 address, IPv6 address of the DHCP Relay, Neighbor IPv6 address, LACP port priority, **long**, **short**, **link-aggregation**, **mac-phy-status**, **management-address**, **max-frame-size**, **port-description**, **port-protocol-vlan**, **port-vlan**, **power-mdi**, **protocol-identity**, **system-capabilities**, **system-description**, **system-name**, **vid-management**, **vlan-name**, counter for the load interval, name of the policy to attach, **all**, COPP class name to attach, **qos**, **queuing**, **enable**, **disable**, **auto**, port path cost, **loop**, **root**, **auto**, **point-to-point**, **shared**, MSTP instance range, port priority value, specify VLAN, allowed traffic level, **ipv6**, **source-interface**.
+`interfaceArg4` | This is an overloaded BGP variable. Please refer to the [cnos_interface module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_interface.html?cp=0_3_1_0_2_12) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: **key-chain**, **key-id**, **keyed-md5**, **keyed-sha1**, **meticulous-keyed-md5**, **meticulous-keyed-sha1**, **simple**, interval value, BFD minimum receive interval, destination IP address, **in**, **out**, MAC address in XXXX.XXXX.XXXX format, timeout value, **class-id**, **request**, IPv4 address of the DHCP Relay, OSPF area ID, **anycast**, **secondary**, **ethernet**, **vlan**, load interval delay, name of the QoS policy to attach, **input**, **output**, **cost**, **port-priority**.
+`interfaceArg5` | This is an overloaded BGP variable. Please refer to the [cnos_interface module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_interface.html?cp=0_3_1_0_2_12) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: name of the key chain, key ID, **key-chain**, **key-id**, BFD minimum receive interval, Hello multiplier value, **admin-down**, **multihop**, **non-persistent**, vendor class ID name, **bootfile-name**, **host-name**, **log-server**, **ntp-server**, **tftp-server-name**, specifiy ethernet port, specify VLAN, name of the QoS policy to attach, **auto**, port path cost, port priority value. 
+`interfaceArg6` | This is an overloaded BGP variable. Please refer to the [cnos_interface module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_interface.html?cp=0_3_1_0_2_12) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: authentication key string, name of the key chain, key ID, Hello multiplier value, **admin-down**, **non-persistent**.
+`interfaceArg7` | This is an overloaded BGP variable. Please refer to the [cnos_interface module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_interface.html?cp=0_3_1_0_2_12) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: authentication key string, **admin-down**.
 
 
 ## Dependencies
+---
+<add dependencies information below>
 
-- username.iptables - configure the firewall and block all ports except those needed for the web server and ssh access.
-- username.common - perform common server configuration
-- /etc/ansible/hosts - You must be editing the /etc/ansible/hosts file with the device information which are designated switches for Port Aggregation configurations. You may refer to cnos_ethernet_sample for a sample configuration. Its pasted below  as well for your convenience.
-  [cnos_ethernet_sample]
-  10.241.107.39   username=<username> password=<password> deviceType=g8272_cnos
-  10.241.107.40   username=<username> password=<password> deviceType=g8272_cnos 
+- username.iptables - Configures the firewall and blocks all ports except those needed for web server and SSH access.
+- username.common - Performs common server configuration.
+- cnos_interface.py - This modules needs to be present in the *library* directory of the role.
+- cnos_utility.py - This module needs to be present in the PYTHONPATH environment variable set in the Ansible system.
+- /etc/ansible/hosts - You must edit the */etc/ansible/hosts* file with the device information of the switches designated as leaf switches. You may refer to *cnos_interface_sample_hosts* for a sample configuration.
+
+Ansible keeps track of all network elements that it manages through a hosts file. Before the execution of a playbook, the hosts file must be set up.
+
+Open the */etc/ansible/hosts* file with root privileges. Most of the file is commented out by using **#**. You can also comment out the entries you will be adding by using **#**. You need to copy the content of the hosts file for the role into the */etc/ansible/hosts* file. The hosts file for the role is located in the main directory of the multiple layer vLAG configuration solution.
+
+```
+[cnos_ethernet_sample]
+10.241.107.39   username=<username> password=<password> deviceType=g8272_cnos
+10.241.107.40   username=<username> password=<password> deviceType=g8272_cnos 
+```
     
-  You should change all the Ip Addresses involved appropriately
-- cnos_interface.py - this module has to come in the library folder of the role.
-- cnos_utility.py - this module has to come in the PYTHONPATH environment variable set in the Ansible system
+**Note:** You need to change the IP addresses to fit your specific topology. You also need to change the `<username>` and `<password>` to the appropriate values used to log into the specific Lenovo network devices.
+
 
 ## Example Playbook
+---
+<add playbook samples below>
 
+To execute an Ansible playbook, use the following command:
+
+```
+ansible-playbook cnos_interface_sample.yml -vvv
+```
+
+`-vvv` is an optional verbos command that helps identify what is happening during playbook execution. The playbook for each role is located in the main directory of the solution.
+
+```
  - name: Module to  do Interface Ethernet configurations
    hosts: cnos_ethernet_sample
    gather_facts: no
    connection: local
-
    roles:
     - cnos_ethernet_sample
+```
+
 
 ## License
- 
+---
+<add license information below>
 Copyright (C) 2017 Lenovo, Inc.
 
-This Ansible Role is distributed WITHOUT ANY WARRANTY; without even the implied 
-warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+This Ansible Role is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
-See the GNU General Public License for more details <http://www.gnu.org/licenses/>.
+See the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
