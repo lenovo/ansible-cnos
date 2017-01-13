@@ -2,9 +2,18 @@
 ---
 <add role description below>
 
-The configuration of the two spine switches in the PoD for BGP in the Clos network consist of common variables that apply to all spine switches and unique variables that apply to a specific spine switch. Therefore multiple templates must be used on the spine switches.
+The configuration is the same on all spine switches for BGP in the Clos network configuration. Therefore a single template can be used on all spine switches. The template must contain the values specified below.
 
 For more details, see [Configuring a Clos Network using Ansible](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fconfiguring_a_clos_network_using_ansible.html&cp=0_3_1_0_5).
+
+
+## Installation
+---
+<add role installation information below>
+
+```
+ansible-galaxy install clos_spine_bgp_bfd
+```
 
 
 ## Requirements
@@ -45,38 +54,47 @@ Switch-specific Variables | Description
 `spine_to_leaf1_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to leaf switch 1
 `spine_to_leaf1_description1` | Configures the description of the first port connected to leaf switch 1 (maximum of 80 characters)
 `spine_to_leaf1_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port  connected to leaf switch 1
+
 `spine_to_leaf1_interface2` | Specifies the second ethernet port (*slot number/port number*) connected to leaf switch 1
 `spine_to_leaf1_description2` | Configures the description of the second port connected to leaf switch 1 (maximum of 80 characters)
 `spine_to_leaf1_ip2` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port  connected to leaf switch 1
+
 `spine_to_leaf2_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to leaf switch 2
 `spine_to_leaf2_description1` | Configures the description of the first port connected to leaf switch 2 (maximum of 80 characters)
 `spine_to_leaf2_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port  connected to leaf switch 2
+
 `spine_to_leaf2_interface2` | Specifies the second ethernet port (*slot number/port number*) connected to leaf switch 2
 `spine_to_leaf1_description1` | Configures the description of the second port connected to leaf switch 2 (maximum of 80 characters)
 `spine_to_leaf1_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port  connected to leaf switch 2
+
 `spine_to_leaf3_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to leaf switch 3
 `spine_to_leaf3_description1` | Configures the description of the first port connected to leaf switch 3 (maximum of 80 characters)
 `spine_to_leaf3_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port  connected to leaf switch 3
+
 `spine_to_leaf3_interface2` | Specifies the second ethernet port (*slot number/port number*) connected to leaf switch 3
 `spine_to_leaf3_description2` | Configures the description of the second port connected to leaf switch 3 (maximum of 80 characters)
 `spine_to_leaf3_ip2` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port  connected to leaf switch 3
+
 `spine_to_leaf4_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to leaf switch 4
 `spine_to_leaf4_description1` | Configures the description of the first port connected to leaf switch 4 (maximum of 80 characters)
 `spine_to_leaf4_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port  connected to leaf switch 4
+
 `spine_to_leaf4_interface2` | Specifies the second ethernet port (*slot number/port number*) connected to leaf switch 4
 `spine_to_leaf4_description1` | Configures the description of the second port connected to leaf switch 4 (maximum of 80 characters)
 `spine_to_leaf4_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port  connected to leaf switch 4
+
 `router_as_number` | Configures the router Autonomous System (AS) Number (*1-4294967295*)
 `router_multipath_number` | Configures the router multipath number
 `neighbor_ad_interval` | Configures the neighbor advertisement interval (*0-65535* seconds)
-`neighbor_address1` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of leaf 1 connected to port 1
-`neighbor_address2` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of leaf 1 connected to port 2
-`neighbor_address3` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of leaf 2 connected to port 1
-`neighbor_address4` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of leaf 2 connected to port 2
-`neighbor_address5` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of leaf 3 connected to port 1
-`neighbor_address6` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of leaf 3 connected to port 2
-`neighbor_address7` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of leaf 4 connected to port 1
-`neighbor_address8` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of leaf 4 connected to port 2
+
+`neighbor_address1` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 1
+`neighbor_address2` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 2
+`neighbor_address3` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 3
+`neighbor_address4` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 4
+`neighbor_address1` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 5
+`neighbor_address2` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 6
+`neighbor_address3` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 7
+`neighbor_address4` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 8
 
 
 ## Dependencies
@@ -89,12 +107,14 @@ Switch-specific Variables | Description
 
 Ansible keeps track of all network elements that it manages through a hosts file. Before the execution of a playbook, the hosts file must be set up.
 
-Open the */etc/ansible/hosts* file with root privileges. Most of the file is commented out by using **#**. You can also comment out the entries you will be adding by using **#**. You need to copy the content of the hosts file for the role into the */etc/ansible/hosts* file. The sample hosts file for the role is located in the main directory.
+Open the */etc/ansible/hosts* file with root privileges. Most of the file is commented out by using **#**. You can also comment out the entries you will be adding by using **#**. You need to copy the content of the hosts file for the role into the */etc/ansible/hosts* file. The hosts file for the role is located in the main directory of the multiple layer vLAG configuration solution.
 
 ```
 [clos_spine_bgp_bfd]
 10.240.175.111   username=<username> password=<password> deviceType=g8272_cnos
 10.240.175.112   username=<username> password=<password> deviceType=g8272_cnos
+10.240.175.131   username=<username> password=<password> deviceType=g8272_cnos
+10.240.175.132   username=<username> password=<password> deviceType=g8272_cnos
 ```
 **Note:** You need to change the IP addresses to fit your specific topology. You also need to change the `<username>` and `<password>` to the appropriate values used to log into the specific Lenovo network devices.
 
@@ -106,7 +126,7 @@ Open the */etc/ansible/hosts* file with root privileges. Most of the file is com
 To execute an Ansible playbook, use the following command:
 
 ```
-ansible-playbook clos_spine_bgp_bfd.yml -vvv
+user# ansible-playbook clos_spine_bgp_bfd.yml -vvv
 ```
 
 `-vvv` is an optional verbos command that helps identify what is happening during playbook execution. The playbook for each role of the Clos network configuration solution is located in the main directory of the solution.

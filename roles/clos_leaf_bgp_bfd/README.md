@@ -2,9 +2,18 @@
 ---
 <add role description below>
 
-The configuration of the four leaf switches in the PoD for BGP in the Clos network consist of common variables that apply to all leaf switches and unique variables that apply to a specific leaf switch. Therefore multiple templates must be used on the leaf switches. 
+The configuration is the same on all leaf switches for BGP in the Clos network configuration. Therefore a single template can be used on all leaf switches. The template must contain the values specified below.
 
 For more details, see [Configuring a Clos Network using Ansible](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fconfiguring_a_clos_network_using_ansible.html&cp=0_3_1_0_5).
+
+
+## Installation
+---
+<add role installation information below>
+
+```
+ansible-galaxy install clos_leaf_bgp_bfd
+```
 
 
 ## Requirements
@@ -20,7 +29,7 @@ For more details, see [Configuring a Clos Network using Ansible](http://systemx.
 ---
 <add role variables information below>
 
-The values of the template variables need to be modified to fit the specific scenario in which you are deploying the solution. To change the values of the variables, you need to visits the *vars* directory of each role and edit the *main.yml* file located there. The values stored in this file will be used by Ansible when the template is executed.
+The values of the variables used need to be modified to fit the specific scenario in which you are deploying the solution. To change the values of the variables, you need to visits the *vars* directory of each role and edit the *main.yml* file located there. The values stored in this file will be used by Ansible when the template is executed.
 
 The syntax of *main.yml* file for variables is the following:
 
@@ -37,6 +46,7 @@ Common Variables | Description
 `username` | Specifies the username used to log into the switch
 `password` | Specifies the password used to log into the switch
 `hostname` | Specifies the hostname of the switch to connect to
+
 `stpmode` | Configures the STP mode (**mst** - MSTP, **rapid-pvst** - Rapid PVST+, **disable** - STP is disabled) for all leaf switches
 `stpmst` | STP MST value for all leaf switches
 
@@ -52,16 +62,16 @@ Switch-specific Variables | Description
 `leaf_to_spine2_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to spine switch 2
 `leaf_to_spine2_description1` | Configures the description of the first port connected to spine switch 2 (maximum of 80 characters)
 `leaf_to_spine2_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port connected to spine switch 2
-`leaf_to_spine2_interface2` | Specifies the second ethernet port (*slot number/port number*) connected to spine switch 2
-`leaf_to_spine2_description2` | Configures the description of the second port connected to spine switch 2 (maximum of 80 characters)
-`leaf_to_spine2_ip2` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port connected to spine switch 2
+`leaf_to_spine2_interface1` | Specifies the second ethernet port (*slot number/port number*) connected to spine switch 2
+`leaf_to_spine2_description1` | Configures the description of the second port connected to spine switch 2 (maximum of 80 characters)
+`leaf_to_spine2_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port connected to spine switch 2
 `router_as_number` | Configures the router Autonomous System (AS) Number (*1-4294967295*)
 `router_multipath_number` | Configures the router multipath number
 `neighbor_ad_interval` | Configures the neighbor advertisement interval (*0-65535* seconds)
-`neighbor_address1` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of spine 1 connected to port 1
-`neighbor_address2` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of spine 1 connected to port 2
-`neighbor_address3` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*) of spine 2 connected to port 1
-`neighbor_address4` | Specifies the spine neighbor IP address (*IPv4 or IPV6 address/prefix length*) spine 2 connected to port 2
+`neighbor_address1` | Specifies the spine neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 1
+`neighbor_address2` | Specifies the spine neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 2
+`neighbor_address3` | Specifies the spine neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 3
+`neighbor_address4` | Specifies the spine neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 4
 
 
 ## Dependencies
@@ -74,7 +84,7 @@ Switch-specific Variables | Description
 
 Ansible keeps track of all network elements that it manages through a hosts file. Before the execution of a playbook, the hosts file must be set up.
 
-Open the */etc/ansible/hosts* file with root privileges. Most of the file is commented out by using **#**. You can also comment out the entries you will be adding by using **#**. You need to copy the content of the hosts file for the role into the */etc/ansible/hosts* file. The sample hosts file for the role is located in the main directory.
+Open the */etc/ansible/hosts* file with root privileges. Most of the file is commented out by using **#**. You can also comment out the entries you will be adding by using **#**. You need to copy the content of the hosts file for the role into the */etc/ansible/hosts* file. The hosts file for the role is located in the main directory of the multiple layer vLAG configuration solution.
 
 ```
 [clos_leaf_bgp_bfd]
@@ -82,6 +92,10 @@ Open the */etc/ansible/hosts* file with root privileges. Most of the file is com
 10.240.175.212   username=<username> password=<password> deviceType=g8272_cnos
 10.240.175.213   username=<username> password=<password> deviceType=g8272_cnos
 10.240.175.214   username=<username> password=<password> deviceType=g8272_cnos
+10.240.175.231   username=<username> password=<password> deviceType=g8272_cnos
+10.240.175.232   username=<username> password=<password> deviceType=g8272_cnos
+10.240.175.233   username=<username> password=<password> deviceType=g8272_cnos
+10.240.175.234   username=<username> password=<password> deviceType=g8272_cnos
 ```
 **Note:** You need to change the IP addresses to fit your specific topology. You also need to change the `<username>` and `<password>` to the appropriate values used to log into the specific Lenovo network devices.
 
