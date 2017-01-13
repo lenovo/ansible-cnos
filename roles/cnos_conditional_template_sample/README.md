@@ -1,14 +1,20 @@
-# Ansible Role: cnos_bgp_sample - CNOS Switch BGP Configuration
+# Ansible Role: cnos_conditional_template_sample - Manages switch configuration using templates with respect to conditions specified in the inventory
 ---
 <add role description below>
 
-This role is an example of using the *cnos_bgp.py* Lenovo module in the context of CNOS switch configuration. This module allows you to work with Border Gateway Protocol (BGP) related configurations. The operators used are overloaded to ensure control over switch BGP configurations. This module is invoked using method with *asNumber* as one of its arguments.
+This role is an example of using the *cnos_conditional_template.py* Lenovo module in the context of CNOS switch configuration. This module allows you to work with the running configuration of a switch. It provides a way to execute a set of CNOS commands on a switch by evaluating the current running configuration and executing the commands only if the specific settings have not been already configured.
 
-The first level of the BGP configuration allows to set up an AS number, with the following attributes going into various configuration operations under the context of BGP. After passing this level, there are eight BGP arguments that will perform further configurations. They are *bgpArg1*, *bgpArg2*, *bgpArg3*, *bgpArg4*, *bgpArg5*, *bgpArg6*, *bgpArg7*, and *bgpArg8*.
+The configuration source can be a set of commands or a template written in the Jinja2 templating language.
+
+This module functions the same as the *cnos_template.py* module. The only exception is that the following inventory variable can be specified: `“condition = <flag string>”`
+
+When this inventory variable is specified as the variable of a task, the template is executed for the network element that matches the flag string.
+
+Usually, templates are used when commands are the same across a group of network devices. When there is a requirement to skip the execution of the template on one or more devices, it is recommended to use this module.
 
 The results of the operation can be viewed in *results* directory.
 
-For more details, see [Lenovo modules for Ansible: cnos_bgp](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fcnos_bgp.html&cp=0_3_1_0_4_16).
+For more details, see [Lenovo modules for Ansible: cnos_conditional_template](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fcnos_conditional_template.html&cp=0_3_1_0_4_11).
 
 
 ## Requirements
@@ -35,6 +41,7 @@ Variable | Description
 `enablePassword` | Configures the password used to enter Global Configuration command mode on the switch (this is an optional parameter)
 `hostname` | Searches the hosts file at */etc/ansible/hosts* and identifies the IP address of the switch on which the role is going to be applied
 `deviceType` | Specifies the type of device from where the configuration will be backed up (**g8272_cnos** - G8272, **g8296_cnos** - G8296)
+`condition` | If `condition=<flag string>` is specified in the inventory file against any device, the template execution is done for that device in case it matches the flag setting for that task
 
 The values of the variables used need to be modified to fit the specific scenario in which you are deploying the solution. To change the values of the variables, you need to visits the *vars* directory of each role and edit the *main.yml* file located there. The values stored in this file will be used by Ansible when the template is executed.
 
@@ -48,15 +55,8 @@ You will need to replace the `<value>` field with the value that suits your topo
 
 Variable | Description
 --- | ---
-`asNum` | Specifies the AS number
-`bgpArg1` | This is an overloaded BGP variable. Please refer to the [cnos_bgp module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_bgp.html?cp=0_3_1_0_2_13) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: **address-family**, **bestpath**, **bgp**, **cluster-id**, **confederation**, **enforce-first-as**, **fast-external-failover**, **graceful-restart**, **graceful-restart-helper**, **log-neighbor-changes**, **maxas-limit**, **neighbor**, **router-id**, **shutdown**, **synchronization**, **timers**, **vrf**.
-`bgpArg2` | This is an overloaded BGP variable. Please refer to the [cnos_bgp module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_bgp.html?cp=0_3_1_0_2_13) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: **ipv4**, **ipv6**, **always-compare-med**, **compare-confed-aspath**, **compare-routerid**, **dont-compare-originator-id**, **tie-break-on-age**, **as-path**, **med**, number of times to prepend the local AS, Route Reflector Cluster ID as a 32 bit quantity or in IP address format, **identifier**, **peers**, delay value, number of autonomous systems in the AS-path attribute, neighbor address, neighbor prefix, manually configured router identifier, keepalive interval.
-`bgpArg3` | This is an overloaded BGP variable. Please refer to the [cnos_bgp module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_bgp.html?cp=0_3_1_0_2_13) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: **aggregate-address**, **client-to-client**, **dampening**, **distance**, **maximum-paths**, **network**, **nexthop**, **redistribute**, **save**, **synchronization**, **ignore**, **multipath-relax**, **confed**, **missing-as-worst**, **non-deterministic**, **remove-recv-med**, **remove-send-med**, set routing domain confederation AS, AS number.
-`bgpArg4` | This is an overloaded BGP variable. Please refer to the [cnos_bgp module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_bgp.html?cp=0_3_1_0_2_13) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: IP address/prefix length, **route-map**, time after which a penalty is decreased by half, administrative distance to routes outside the AS, **ebgp**, **ibgp**, **synchronization**, IP address, delay value, **direct**, **ospf**, **static**, **memory**.
-`bgpArg5` | This is an overloaded BGP variable. Please refer to the [cnos_bgp module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_bgp.html?cp=0_3_1_0_2_13) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: **as-set**, **summary-only**, name of the route map that controls where BGP route dampening is enabled, value to start reusing a route, administrative distance to routes inside the AS, value for maximum path numbers, **backdoor**, **mask**, **route-map**.
-`bgpArg6` | This is an overloaded BGP variable. Please refer to the [cnos_bgp module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_bgp.html?cp=0_3_1_0_2_13) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: **summary-only**, **as-set**, value to start suppressing a route, administrative distance for local routes, IP subnet address mask, name of the route map.
-`bgpArg7` | This is an overloaded BGP variable. Please refer to the [cnos_bgp module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_bgp.html?cp=0_3_1_0_2_13) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: maximum duration to suppress a stable route, **route-map**, **backdoor**.
-`bgpArg8` | This is an overloaded BGP variable. Please refer to the [cnos_bgp module documentation](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_bgp.html?cp=0_3_1_0_2_13) for detailed information on usage. The values of these variables depend on the configuration context and the choices are the following: time after which an unreachable route’s penalty is decreased by half, **backdoor**.
+`flag` | If a task needs to be executed, you have to set the flag the same as it is specified in the inventory for that device
+`commandfile` | Specifies the path to the CNOS command file which needs to be applied
 
 
 ## Dependencies
@@ -65,20 +65,20 @@ Variable | Description
 
 - username.iptables - Configures the firewall and blocks all ports except those needed for web server and SSH access.
 - username.common - Performs common server configuration.
-- cnos_bgp.py - This modules needs to be present in the *library* directory of the role.
+- cnos_conditional_template.py - This modules needs to be present in the *library* directory of the role.
 - cnos_utility.py - This module needs to be present in the PYTHONPATH environment variable set in the Ansible system.
-- /etc/ansible/hosts - You must edit the */etc/ansible/hosts* file with the device information of the switches designated as leaf switches. You may refer to *cnos_bgp_sample_hosts* for a sample configuration.
+- /etc/ansible/hosts - You must edit the */etc/ansible/hosts* file with the device information of the switches designated as leaf switches. You may refer to *cnos_conditional_template_sample_hosts* for a sample configuration.
 
 Ansible keeps track of all network elements that it manages through a hosts file. Before the execution of a playbook, the hosts file must be set up.
 
 Open the */etc/ansible/hosts* file with root privileges. Most of the file is commented out by using **#**. You can also comment out the entries you will be adding by using **#**. You need to copy the content of the hosts file for the role into the */etc/ansible/hosts* file. The hosts file for the role is located in the main directory of the multiple layer vLAG configuration solution.
 
 ```
-[cnos_bgp_sample]
-10.241.107.39   username=<username> password=<password> deviceType=g8272_cnos
-10.241.107.40   username=<username> password=<password> deviceType=g8272_cnos
+[cnos_conditional_template_sample]
+10.241.107.39   username=<username> password=<password> deviceType=g8272_cnos condition=pass
+10.241.107.40   username=<username> password=<password> deviceType=g8272_cnos 
 ```
-  
+    
 **Note:** You need to change the IP addresses to fit your specific topology. You also need to change the `<username>` and `<password>` to the appropriate values used to log into the specific Lenovo network devices.
 
 
@@ -89,21 +89,21 @@ Open the */etc/ansible/hosts* file with root privileges. Most of the file is com
 To execute an Ansible playbook, use the following command:
 
 ```
-ansible-playbook cnos_bgp_sample.yml -vvv
+ansible-playbook cnos_conditional_template_sample.yml -vvv
 ```
 
 `-vvv` is an optional verbos command that helps identify what is happening during playbook execution. The playbook for each role is located in the main directory of the solution.
 
 ```
-- name: Module to do BGP configuration
-   hosts: cnos_bgp_sample
+ - name: Module to  do some template configurations
+   hosts: cnos_conditional_template_sample
    gather_facts: no
    connection: local
    roles:
-    - cnos_bgp_sample
+    - cnos_conditional_template_sample
 ```
-	
-	
+
+
 ## License
 ---
 <add license information below>

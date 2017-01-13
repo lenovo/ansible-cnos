@@ -13,7 +13,7 @@ Usually, commands are executed across a group of network devices. When there is 
 
 The results of the operation can be viewed in *results* directory.
 
-For more details, see [Lenovo modules for Ansible: cnos_conditional_command](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/cnos_conditional_command.html?cp=0_3_1_0_2_9).
+For more details, see [Lenovo modules for Ansible: cnos_conditional_command](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fcnos_conditional_command.html&cp=0_3_1_0_4_9).
 
 
 ## Requirements
