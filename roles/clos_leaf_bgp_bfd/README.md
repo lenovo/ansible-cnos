@@ -4,16 +4,7 @@
 
 The configuration is the same on all leaf switches for BGP in the Clos network configuration. Therefore a single template can be used on all leaf switches. The template must contain the values specified below.
 
-For more details, see [Configuring a Clos Network using Ansible](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fconfiguring_a_clos_network_using_ansible.html&cp=0_3_1_0_5).
-
-
-## Installation
----
-<add role installation information below>
-
-```
-ansible-galaxy install clos_leaf_bgp_bfd
-```
+For more details, see [Configuring a Clos Network using Ansible](http://ralfss28.labs.lenovo.com:5555/help/topic/com.lenovo.switchmgt.ansible.doc/configuring_a_clos_network_using_ansible.html?cp=0_3_1_0_3).
 
 
 ## Requirements
@@ -41,37 +32,41 @@ You will need to replace the `<value>` field with the value that suits your topo
 
 Available variables are listed below, along with description:
 
-Common Variables | Description
+Variable | Description
 --- | ---
 `username` | Specifies the username used to log into the switch
 `password` | Specifies the password used to log into the switch
 `hostname` | Specifies the hostname of the switch to connect to
-
-`stpmode` | Configures the STP mode (**mst** - MSTP, **rapid-pvst** - Rapid PVST+, **disable** - STP is disabled) for all leaf switches
-`stpmst` | STP MST value for all leaf switches
-
-Switch-specific Variables | Description
---- | ---
-`flag` | Conditional flag specifying which leaf switch the unique variables should be applied to
-`leaf_to_spine1_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to spine switch 1
-`leaf_to_spine1_description1` | Configures the description of the first port connected to spine switch 1 (maximum of 80 characters)
-`leaf_to_spine1_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port  connected to spine switch 1
-`leaf_to_spine1_interface2` | Specifies the second ethernet port (*slot number/port number*) connected to spine switch 1
-`leaf_to_spine1_description2` | Configures the description of the second port connected to spine switch 1 (maximum of 80 characters)
-`leaf_to_spine1_ip2` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port connected to spine switch 1
-`leaf_to_spine2_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to spine switch 2
-`leaf_to_spine2_description1` | Configures the description of the first port connected to spine switch 2 (maximum of 80 characters)
-`leaf_to_spine2_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port connected to spine switch 2
-`leaf_to_spine2_interface1` | Specifies the second ethernet port (*slot number/port number*) connected to spine switch 2
-`leaf_to_spine2_description1` | Configures the description of the second port connected to spine switch 2 (maximum of 80 characters)
-`leaf_to_spine2_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port connected to spine switch 2
-`router_as_number` | Configures the router Autonomous System (AS) Number (*1-4294967295*)
-`router_multipath_number` | Configures the router multipath number
-`neighbor_ad_interval` | Configures the neighbor advertisement interval (*0-65535* seconds)
-`neighbor_address1` | Specifies the spine neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 1
-`neighbor_address2` | Specifies the spine neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 2
-`neighbor_address3` | Specifies the spine neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 3
-`neighbor_address4` | Specifies the spine neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 4
+`stpmode` | Configures the STP mode (**mst** - MSTP, **rapid-pvst** - Rapid PVST+, **disable** - STP is disabled)
+`vlanid1` | Specifies the VLAN ID (*1-4096*)
+`stpmst` | STP MST value
+`slot_chassis_number1` | Specifies the ethernet port (*slot number/port number*)
+`interface_description1` | Configures the interface description (maximum of 80 characters)
+`interface_ip_addr1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*)
+`slot_chassis_number2` | Specifies the ethernet port (*slot number/port number*)
+`interface_ip_addr2` |Configures the IP address (*IPv4 or IPV6 address/prefix length*)
+`interface_description2` | Configures the interface description (maximum of 80 characters)
+`slot_chassis_number3` | Specifies the ethernet port (*slot number/port number*)
+`interface_ip_addr3` |Configures the IP address (*IPv4 or IPV6 address/prefix length*)
+`slot_chassis_number4` | Specifies the ethernet port (*slot number/port number*)
+`interface_ip_addr4` |Configures the IP address (*IPv4 or IPV6 address/prefix length*)
+`slot_chassis_number5` | Specifies the ethernet port (*slot number/port number*)
+`interface_description3` | Configures the interface description (maximum of 80 characters)
+`interface_ip_addr5` | Configures the IP address (*IPv4 or IPV6 address/prefix length*)
+`interface_ip_addr6` | Configures the IP address (*IPv4 or IPV6 address/prefix length*)
+`router_as_number1` | Configures the router Autonomous System (AS) Number (*1-4294967295*)
+`router_multipath_number1` | Configures the router multipath number
+`neighbor_address1` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*)
+`neighbor_as_number1` | Specifies the neighbor Autonomous System (AS) Number (*1-4294967295*)
+`neighbor_ad_interval1` | Configures the neighbour advertisement interval (*0-65535* seconds)
+`neighbor_address2` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*)
+`neighbor_as_number2` | Specifies the neighbor Autonomous System (AS) Number (*1-4294967295*)
+`neighbor_address3` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*)
+`neighbor_address4` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*)
+`neighbor_address5` | Specifies the neighbor IP address (*IPv4 or IPV6 address/prefix length*)
+`ip_dest_prefix1` | Configures the IP destination prefix (*IPv4 address/prefix length*)
+`mgmt_int_number` | Specifies the management interface number (*0*)
+`ip_gateway_addr` | Configures the IP gateway address (*IPv4 address*)
 
 
 ## Dependencies
@@ -107,7 +102,7 @@ Open the */etc/ansible/hosts* file with root privileges. Most of the file is com
 To execute an Ansible playbook, use the following command:
 
 ```
-ansible-playbook clos_leaf_bgp_bfd.yml -vvv
+root@Amubu:/home/test/ansible/demo# ansible-playbook clos_leaf_bgp_bfd.yml -vvv
 ```
 
 `-vvv` is an optional verbos command that helps identify what is happening during playbook execution. The playbook for each role of the Clos network configuration solution is located in the main directory of the solution.

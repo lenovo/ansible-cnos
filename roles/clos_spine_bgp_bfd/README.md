@@ -1,148 +1,97 @@
-# Ansible Role: clos_spine_bgp_bfd - Clos Spine BGP Configuration
----
-<add role description below>
 
-The configuration is the same on all spine switches for BGP in the Clos network configuration. Therefore a single template can be used on all spine switches. The template must contain the values specified below.
+# Ansible Role: CLOS Spine BGP Configuration
 
-For more details, see [Configuring a Clos Network using Ansible](http://systemx.lenovofiles.com/help/index.jsp?topic=%2Fcom.lenovo.switchmgt.ansible.doc%2Fconfiguring_a_clos_network_using_ansible.html&cp=0_3_1_0_5).
+These configuration is common to all the Spine switches for BGP in the CLOS configuration.
+Hence only one template applies to both with same values as specified below.
 
+# Requirements
 
-## Installation
----
-<add role installation information below>
-
-```
-ansible-galaxy install clos_spine_bgp_bfd
-```
-
-
-## Requirements
----
-<add role requirements information below>
-
-- Ansible version 2.2 or later ([Ansible installation documentation](http://docs.ansible.com/ansible/intro_installation.html))
-- Lenovo switches running CNOS version 10.2.1.0 or later
-- an SSH connection to the Lenovo switch (SSH must be enabled on the network device)
+To configure a the CLOS Spine BGP Switches configuration using a single template seamlessly using Ansible.
 
 ## Role Variables
----
-<add role variables information below>
 
-The values of the variables used need to be modified to fit the specific scenario in which you are deploying the solution. To change the values of the variables, you need to visits the *vars* directory of each role and edit the *main.yml* file located there. The values stored in this file will be used by Ansible when the template is executed.
-
-The syntax of *main.yml* file for variables is the following:
-
-```
-<template variable>:<value>
-```
-
-You will need to replace the `<value>` field with the value that suits your topology. The `<template variable>` fields are taken from the template and it is recommended that you leave them unchanged.
        
 Available variables are listed below, along with description:
 
-Common Variables | Description
---- | ---
-`username` | Specifies the username used to log into the switch
-`password` | Specifies the password used to log into the switch
-`hostname` | Specifies the hostname of the switch to connect to
-`stpmode` | Configures the STP mode (**mst** - MSTP, **rapid-pvst** - Rapid PVST+, **disable** - STP is disabled) for all spine switches
-`stpmst` | STP MST value for all spine switches
-
-Switch-specific Variables | Description
---- | ---
-`flag` | Conditional flag specifying which spine switch the unique variables should be applied to
-`spine_to_leaf1_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to leaf switch 1
-`spine_to_leaf1_description1` | Configures the description of the first port connected to leaf switch 1 (maximum of 80 characters)
-`spine_to_leaf1_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port  connected to leaf switch 1
-
-`spine_to_leaf1_interface2` | Specifies the second ethernet port (*slot number/port number*) connected to leaf switch 1
-`spine_to_leaf1_description2` | Configures the description of the second port connected to leaf switch 1 (maximum of 80 characters)
-`spine_to_leaf1_ip2` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port  connected to leaf switch 1
-
-`spine_to_leaf2_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to leaf switch 2
-`spine_to_leaf2_description1` | Configures the description of the first port connected to leaf switch 2 (maximum of 80 characters)
-`spine_to_leaf2_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port  connected to leaf switch 2
-
-`spine_to_leaf2_interface2` | Specifies the second ethernet port (*slot number/port number*) connected to leaf switch 2
-`spine_to_leaf1_description1` | Configures the description of the second port connected to leaf switch 2 (maximum of 80 characters)
-`spine_to_leaf1_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port  connected to leaf switch 2
-
-`spine_to_leaf3_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to leaf switch 3
-`spine_to_leaf3_description1` | Configures the description of the first port connected to leaf switch 3 (maximum of 80 characters)
-`spine_to_leaf3_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port  connected to leaf switch 3
-
-`spine_to_leaf3_interface2` | Specifies the second ethernet port (*slot number/port number*) connected to leaf switch 3
-`spine_to_leaf3_description2` | Configures the description of the second port connected to leaf switch 3 (maximum of 80 characters)
-`spine_to_leaf3_ip2` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port  connected to leaf switch 3
-
-`spine_to_leaf4_interface1` | Specifies the first ethernet port (*slot number/port number*) connected to leaf switch 4
-`spine_to_leaf4_description1` | Configures the description of the first port connected to leaf switch 4 (maximum of 80 characters)
-`spine_to_leaf4_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the first port  connected to leaf switch 4
-
-`spine_to_leaf4_interface2` | Specifies the second ethernet port (*slot number/port number*) connected to leaf switch 4
-`spine_to_leaf4_description1` | Configures the description of the second port connected to leaf switch 4 (maximum of 80 characters)
-`spine_to_leaf4_ip1` | Configures the IP address (*IPv4 or IPV6 address/prefix length*) of the second port  connected to leaf switch 4
-
-`router_as_number` | Configures the router Autonomous System (AS) Number (*1-4294967295*)
-`router_multipath_number` | Configures the router multipath number
-`neighbor_ad_interval` | Configures the neighbor advertisement interval (*0-65535* seconds)
-
-`neighbor_address1` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 1
-`neighbor_address2` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 2
-`neighbor_address3` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 3
-`neighbor_address4` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 4
-`neighbor_address1` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 5
-`neighbor_address2` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 6
-`neighbor_address3` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 7
-`neighbor_address4` | Specifies the leaf neighbor IP address (*IPv4 or IPV6 address/prefix length*) connected to port 8
-
+1. username : User name for the switch
+2. password: Password for the switch
+3. hostname: Host name for this switch
+4. stpmpode: STP Mode value
+5. vlanid1: VLAN Id 1
+6. stpmst : STP MST value
+7. slot_chassis_number1: Specify Slot/Chassis Number 1
+8. process_id1: Process Id 1
+9. area_id1: Area Id 1
+10. interface_ip_addr1: Interface Ip Address 1
+11. slot_chassis_number2 : Specify Slot/Chassis Number 2
+12. interface_ip_addr2:Interface Ip Address 2
+13. interface_description2 : Interface Description 2
+14. slot_chassis_number3: Specify Slot/Chassis Number 3
+15. interface_ip_addr3:Interface Ip Address 3
+16. slot_chassis_number4: Specify Slot/Chassis Number 4
+17. interface_ip_addr4:Interface Ip Address 4
+18. slot_chassis_number5: Specify Slot/Chassis Number 5
+19. slot_chassis_number6: Specify Slot/Chassis Number 6
+20. interface_description3 : Interface Description 3
+21. interface_ip_addr5:Interface Ip Address 5
+22. interface_ip_addr6:Interface Ip Address 6
+23. slot_chassis_number7: Specify Slot/Chassis Number 7
+24. slot_chassis_number8: Specify Slot/Chassis Number 8
+25. interface_ip_addr7: Interface Ip Address 7
+26. slot_chassis_number9: Specify Slot/Chassis Number 9
+27. interface_ip_addr8: Interface Ip Address 8
+28. slot_chassis_number10: Specify Slot/Chassis Number 10
+29. interface_ip_addr9: Interface Ip Address 9
+30. slot_chassis_number11: Specify Slot/Chassis Number 11
+31. interface_ip_addr10: Interface Ip Address 10
+32. interface_ip_addr11: Interface Ip Address 11
+33. router_id: Router Id
+34. router_as_number1: Router AS Number 1
+35. router_multipath_number1: Router Multipath Number 1
+36. neighbor_address1: Neighbor address 1
+37. neighbor_as_number1: Neighbor AS Number 1
+38. neighbor_ad_interval1: Neighbour advertisement interval
+39. neighbor_address2: Neighbor address 2
+40. neighbor_as_number2: Neighbor AS Number 2
+41. neighbor_address3: Neighbor address 3
+42. neighbor_address4: Neighbor address 4
+43. neighbor_address5: Neighbor address 5
+44. neighbor_address6: Neighbor address 6
+45. neighbor_address7: Neighbor address 7
+46. neighbor_as_number4: Neighbor AS Number 4
+47. neighbor_address8: Neighbor address 8
+48. neighbor_address9: Neighbor address 9
+49. neighbor_as_number5: Neighbor AS Number 5
+50. neighbor_address10: Neighbor address 10
+51. ip_dest_prefix1: IP Destination Prefix 1
+52. mgmt_int_number: Management Interface Number
+53. ip_gateway_addr: IP Gateway Address.
 
 ## Dependencies
----
-<add dependencies information below>
 
-- username.iptables - Configures the firewall and blocks all ports except those needed for web server and SSH access.
-- username.common - Performs common server configuration.
-- /etc/ansible/hosts - You must edit the */etc/ansible/hosts* file with the device information of the Clos Spine BGP switches. You may refer to *clos_spine_bgp_bfd_hosts* for a sample configuration.
-
-Ansible keeps track of all network elements that it manages through a hosts file. Before the execution of a playbook, the hosts file must be set up.
-
-Open the */etc/ansible/hosts* file with root privileges. Most of the file is commented out by using **#**. You can also comment out the entries you will be adding by using **#**. You need to copy the content of the hosts file for the role into the */etc/ansible/hosts* file. The hosts file for the role is located in the main directory of the multiple layer vLAG configuration solution.
-
-```
-[clos_spine_bgp_bfd]
-10.240.175.111   username=<username> password=<password> deviceType=g8272_cnos
-10.240.175.112   username=<username> password=<password> deviceType=g8272_cnos
-10.240.175.131   username=<username> password=<password> deviceType=g8272_cnos
-10.240.175.132   username=<username> password=<password> deviceType=g8272_cnos
-```
-**Note:** You need to change the IP addresses to fit your specific topology. You also need to change the `<username>` and `<password>` to the appropriate values used to log into the specific Lenovo network devices.
+- username.iptables - configure the firewall and block all ports except those needed for the web server and ssh access.
+- username.common - perform common server configuration
+- /etc/ansible/hosts - You must be editing the /etc/ansible/hosts file with the device information which are designated
+  as CLOS Spine BGP switches. You may refer to clos_spine_bgp_bfd_hosts for a sample configuration. Its pasted below
+  as well for your convineance.
+  [clos_spine_bgp_bfd]
+  10.240.175.111   username=<username> password=<password> deviceType=g8272_cnos
+  10.240.175.112   username=<username> password=<password> deviceType=g8272_cnos
+  10.240.175.131   username=<username> password=<password> deviceType=g8272_cnos
+  10.240.175.132   username=<username> password=<password> deviceType=g8272_cnos
 
 
 ## Example Playbook
----
-<add playbook samples below>
 
-To execute an Ansible playbook, use the following command:
-
-```
-user# ansible-playbook clos_spine_bgp_bfd.yml -vvv
-```
-
-`-vvv` is an optional verbos command that helps identify what is happening during playbook execution. The playbook for each role of the Clos network configuration solution is located in the main directory of the solution.
-
-```
-- hosts: clos_spine_bgp_bfd
-  roles:
-    - clos_spine_bgp_bfd
-```
-
+    - hosts: clos_spine_bgp_bfd
+      roles:
+        - clos_spine_bgp_bfd
 
 ## License
----
-<add license information below>
+
 Copyright (C) 2017 Lenovo, Inc.
 
-This Ansible Role is distributed WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+This Ansible Role is distributed WITHOUT ANY WARRANTY; without even the implied 
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
 
-See the [GNU General Public License](http://www.gnu.org/licenses/) for more details.
+See the GNU General Public License for more details <http://www.gnu.org/licenses/>.
