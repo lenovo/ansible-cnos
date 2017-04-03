@@ -9,7 +9,7 @@
 
 ### Requirements
 
-* Ansible 2.2 or later installed.  [Ansible Installation Instructions](http://docs.ansible.com/ansible/intro_installation.html)
+* Ansible 2.0-2.2 installed.  [Ansible Installation Instructions](http://docs.ansible.com/ansible/intro_installation.html)
 * Lenovo CNOS network device version 10.2.1.0 or later
 * SSH enabled on the device
 
