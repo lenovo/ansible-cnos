@@ -1,0 +1,14 @@
+# You have to paste this dummy information  in /etc/ansible/hosts
+#    Notes:
+#    - Comments begin with the '#' character
+#    - Blank lines are ignored
+#    - Groups of hosts are delimited by [header] elements
+#    - You can enter hostnames or ip addresses
+#    - A hostname/ip can be a member of multiple groups
+#
+# In the /etc/ansible/hosts file u have to enter [cnos_facts_sample] tag
+# Following you should specify IP Adresses details 
+# Please change <username> and <password> with appropriate value for your switch.
+
+[enos_command]
+10.241.105.24    ansible_connection=network_cli ansible_network_os=enos ansible_ssh_user=<username> ansible_ssh_pass=<password>

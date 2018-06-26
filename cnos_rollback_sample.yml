@@ -1,0 +1,8 @@
+# Common code to do some configurations
+ - name: Module to  do rollback of configurations from back up server.
+   hosts: cnos_rollback_sample
+   gather_facts: no
+   connection: local
+
+   roles:
+    - cnos_rollback_sample
