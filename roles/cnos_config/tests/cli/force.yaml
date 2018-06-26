@@ -1,0 +1,42 @@
+---
+- debug: msg="START cli/force.yaml"
+
+- name: setup
+  cnos_config:
+    commands:
+      - no vlan 13\n
+    provider: "{{ cli }}"
+  ignore_errors: yes
+
+- name: configure device with config
+  cnos_config:
+    src: roles/cnos_config/templates/basic/config.j2
+    provider: "{{ cli }}"
+    match: none
+  register: result
+
+- assert:
+    that:
+      - "result.changed == true"
+      - "result.updates is defined"
+
+- name: check device with config
+  cnos_config:
+    src: roles/cnos_config/templates/basic/config.j2
+    provider: "{{ cli }}"
+    match: none
+  register: result
+
+- assert:
+    that:
+      - "result.changed == true"
+      - "result.updates is defined"
+
+- name: teardown
+  cnos_config:
+    commands:
+      - no vlan 13\n
+    provider: "{{ cli }}"
+
+- debug: msg="END cli/force.yaml"
+

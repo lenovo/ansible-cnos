@@ -1,0 +1,7 @@
+# This contain sample show sys info tasks
+---
+
+- name: Show Sys Info
+  cnos_showsysinfo: host={{ inventory_hostname }} username={{ hostvars[inventory_hostname]['ansible_ssh_user']}}  password={{ hostvars[inventory_hostname]['ansible_ssh_pass']}} enablePassword='{{item.enablePassword}}' outputfile=./results/cnos_showsysinfo_{{ inventory_hostname }}_output.txt
+  with_items: "{{test_showsysinfo_data}}"
+# Completed file
