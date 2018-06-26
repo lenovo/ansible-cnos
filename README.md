@@ -5,7 +5,7 @@
 
 * Modules provide the basis for supporting basic switch management functions.
 * Module Playbooks and Roles are samples showing how to use each of the Modules and must be tailored by the user to their environment.
-* Playbooks and Roles are samples for showing how to use each modules. The values of variables used are typical to the lab test enviroment.  These must be tailored by the user to their environment.
+* The values of variables used in the sample roles and playbooks are typical to the lab test enviroment.  These must be tailored by the user to their environment.
 
 ### Requirements
 
@@ -18,13 +18,13 @@
 
 * Ansible 2.6 has to be installed first.
 * Clone the ansible-cnos github to an appropriate location.(https://github.com/lenovo/ansible-cnos.git)
-* Copy the necessary playbooks and roles to &lt;anisble-install-directory &gt;/test/integration
+* Copy the necessary playbooks and roles to &lt;ansible-install-directory &gt;/test/integration
 * The roles has to be in the "roles" folder not in the "targets" folder.
 * The host file (/etc/ansible/hosts) has to be updated typically as given in sample host files.
 * Edit the hosts file based on IP address/ Username / Password of their environment
 * Please refer to README.md of individual roles for customizations typical to them.
-* Exceute the playbooks from &lt;anisble-install-directory&gt;/test/integration using command 
-  anisble-playbook &lt;Your Sample Playbook.yml &gt; -vvvv
+* Exceute the playbooks from &lt;ansible-install-directory&gt;/test/integration using command     
+  ansible-playbook &lt;Your Sample Playbook.yml &gt; -vvvv
   
 
 ## Documentation
@@ -36,5 +36,3 @@ Lenovo documentation can be found here:
 
 * GPLv3
 * Copyright (C) 2017 Lenovo, Inc.
-
-
