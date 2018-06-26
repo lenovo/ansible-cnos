@@ -1,8 +1,0 @@
-# Code to test all combination sof vlan
- - name: Module to  do vlan configurations
-   hosts: cnos_vlan_sample
-   gather_facts: no
-   connection: local
-
-   roles:
-    - cnos_vlan_sample

@@ -1,8 +1,0 @@
-# Common code to do some configurations
- - name: Module to  do Image download using various protocols
-   hosts: cnos_image_sample
-   gather_facts: no
-   connection: local
-
-   roles:
-    - cnos_image_sample

@@ -1,9 +1,0 @@
-# Common code to do some configurations
- - name: Module to  do vlag configurations
-   hosts: cnos_vlag_sample
-   gather_facts: no
-   connection: local
-
-   roles:
-    - cnos_vlag_sample
-
