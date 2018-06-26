@@ -18,12 +18,13 @@
 
 * Ansible 2.6 has to be installed first.
 * Clone the ansible-cnos github to an appropriate location.(https://github.com/lenovo/ansible-cnos.git)
-* Copy the necessary playbooks and roles to <anisble-install-directory>/test/integration
+* Copy the necessary playbooks and roles to &lt;anisble-install-directory &gt;/test/integration
 * The roles has to be in the "roles" folder not in the "targets" folder.
 * The host file (/etc/ansible/hosts) has to be updated typically as given in sample host files.
 * Edit the hosts file based on IP address/ Username / Password of their environment
-* Exceute the playbooks from <anisble-install-directory>/test/integration using command 
-  anisble-playbook <Your Sample Playbook.yml> -vvvv
+* Please refer to README.md of individual roles for customizations typical to them.
+* Exceute the playbooks from &lt;anisble-install-directory&gt;/test/integration using command 
+  anisble-playbook &lt;Your Sample Playbook.yml &gt; -vvvv
   
 
 ## Documentation
